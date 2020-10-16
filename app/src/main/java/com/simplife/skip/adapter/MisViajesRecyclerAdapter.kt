@@ -10,11 +10,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.simplife.skip.R
 import com.simplife.skip.activities.ViajeDetail
 import com.simplife.skip.models.Viaje
+import com.simplife.skip.models.ViajeInicio
 import kotlinx.android.synthetic.main.myviaje_list_item.view.*
 
 class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items : List<Viaje> = ArrayList()
+    private var items : List<ViajeInicio> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MiViajeViewHolder(
@@ -34,7 +35,7 @@ class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         }
     }
 
-    fun submitList(viajeList: List<Viaje>){
+    fun submitList(viajeList: List<ViajeInicio>){
         items = viajeList
     }
 
@@ -50,12 +51,12 @@ class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         val miviajeHoraDestino = itemView.miviaje_horadestino
         val reportbutton = itemView.miviaje_commentBtn
 
-        fun bind(viaje: Viaje){
+        fun bind(viaje: ViajeInicio){
             miviajeTitle.setText(viaje.fechaPublicacion)
-            miauthor.setText(viaje.conductor.nombres)
-            //miviajeSource.setText(viaje.conductor.ubicacion)
-            miviajeDestiny.setText(viaje.conductor.sede)
-            miviajeHoraDestino.setText(viaje.horaLlegada)
+            miauthor.setText(viaje.nombres)
+            miviajeSource.setText(viaje.paradas.get(0).ubicacion)
+            miviajeDestiny.setText(viaje.paradas.get(1).ubicacion)
+            miviajeHoraDestino.setText(viaje.horaFin)
             miviajeHoraOrigen.setText(viaje.horaInicio)
 
             val requestOptions = RequestOptions()
@@ -64,7 +65,7 @@ class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
-                .load(viaje.conductor.imagen)
+                .load(viaje.imagen)
                 .into(miuserImage)
 
             reportbutton.setOnClickListener{

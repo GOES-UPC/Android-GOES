@@ -2,9 +2,11 @@ package com.simplife.skip.adapter
 
 import android.content.Context
 import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -44,6 +46,9 @@ class PasajerosEnViajeRecyclerAdapter(var context: Context): RecyclerView.Adapte
         val estado = view.findViewById<TextView>(R.id.pasajero_estado)
         val avatar = view.findViewById<CircleImageView>(R.id.avatar_pasajero)
 
+        val checkBox: CheckBox = view.findViewById(R.id.change_state_to_on_trip)
+
+
         fun bind(p: PasajeroEnLista){
             nombrePasajero.text = p.nombres
             puntoEncuentro.text = p.puntoEncuentro
@@ -52,6 +57,11 @@ class PasajerosEnViajeRecyclerAdapter(var context: Context): RecyclerView.Adapte
             Glide.with(context)
                 .load(p.imagen)
                 .into(avatar)
+            checkBox.setOnClickListener{
+                if(checkBox.isChecked){
+                    Log.i("Checked!","Pasajero ID ${p.usuarioId} está en el viaje")
+                }
+            }
         }
     }
 }

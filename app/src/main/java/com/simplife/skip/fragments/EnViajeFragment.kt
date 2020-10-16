@@ -37,10 +37,7 @@ class EnViajeFragment : Fragment() {
         recyclerPasajerosEnViaje = view.findViewById(R.id.recycler_pasajeros_a_recoger)
         recyclerPasajerosEnViaje.layoutManager = LinearLayoutManager(context)
 
-        adapterPasajerosEnViaje = PasajerosEnViajeRecyclerAdapter(requireContext())
 
-
-        recyclerPasajerosEnViaje.adapter = adapterPasajerosEnViaje
 
         val viajeService = ApiClient.retrofit.create(ViajeApiService::class.java)
 
@@ -54,6 +51,8 @@ class EnViajeFragment : Fragment() {
                 response: Response<List<PasajeroEnLista>>
             ) {
                 if(response.isSuccessful){
+                    adapterPasajerosEnViaje = PasajerosEnViajeRecyclerAdapter(requireContext())
+                    recyclerPasajerosEnViaje.adapter = adapterPasajerosEnViaje
                     adapterPasajerosEnViaje.submitList(response.body()!! as ArrayList)
                 }
             }

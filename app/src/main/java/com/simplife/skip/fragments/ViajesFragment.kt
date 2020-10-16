@@ -22,6 +22,7 @@ import com.simplife.skip.interfaces.UsuarioApiService
 import com.simplife.skip.interfaces.ViajeApiService
 import com.simplife.skip.models.Usuario
 import com.simplife.skip.models.Viaje
+import com.simplife.skip.models.ViajeInicio
 import com.simplife.skip.util.TopSpacingItemDecoration
 import com.simplife.skip.util.URL_API
 import retrofit2.Call
@@ -106,34 +107,54 @@ class ViajesFragment : Fragment() {
     }
 
     private fun addDataSet(){
-        viajeService.getViajesDeConductor(usuarioid).enqueue(object :Callback<List<Viaje>>{
-            override fun onResponse(call: Call<List<Viaje>>, response: Response<List<Viaje>>) {
-                val viajes = response.body()
-                Log.i("Viajes",viajes.toString())
-                if(viajes!= null)
-                {
-                    if (rol == "ROL_CONDUCTOR") {
-                        misviajesAdapterConductor = MisViajeCondRecyclerAdapter()
-                        recyclerView.adapter = misviajesAdapterConductor
-                        misviajesAdapterConductor.submitList(viajes)
-                        Log.i("Viajes","Es conductor")
-                    }
-                    else
+        if(rol == "ROL_CONDUCTOR"){
+            viajeService.getViajesDeConductor(usuarioid).enqueue(object :Callback<List<ViajeInicio>>{
+                override fun onResponse(call: Call<List<ViajeInicio>>, response: Response<List<ViajeInicio>>) {
+                    val viajes = response.body()
+                    Log.i("Viajes",viajes.toString())
+                    if(viajes!= null)
                     {
+
+                            misviajesAdapterConductor = MisViajeCondRecyclerAdapter()
+                            recyclerView.adapter = misviajesAdapterConductor
+                            misviajesAdapterConductor.submitList(viajes)
+                            Log.i("Viajes","Es conductor")
+
+
+                        swipeRefreshLayout.isRefreshing = false
+                    }
+                }
+                override fun onFailure(call: Call<List<ViajeInicio>>, t: Throwable) {
+                    Log.e("Viajes","Error al obtener viajes")
+                    swipeRefreshLayout.isRefreshing = false
+                    Toast.makeText(context,"Ha ocurrido un error con viajes conductor en ViajesFragment", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else{
+            viajeService.getViajesDePasajero(usuarioid).enqueue(object :Callback<List<ViajeInicio>>{
+                override fun onResponse(call: Call<List<ViajeInicio>>, response: Response<List<ViajeInicio>>) {
+                    val viajes = response.body()
+                    Log.i("Viajes",viajes.toString())
+                    if(viajes!= null)
+                    {
+
                         misviajesAdapterPasajero = MisViajesRecyclerAdapter()
                         recyclerView.adapter = misviajesAdapterPasajero
                         misviajesAdapterPasajero.submitList(viajes)
                         Log.i("Viajes","Es pasajero")
+
+
+                        swipeRefreshLayout.isRefreshing = false
                     }
-                    swipeRefreshLayout.isRefreshing = false
                 }
-            }
-            override fun onFailure(call: Call<List<Viaje>>, t: Throwable) {
-                Log.e("Viajes","Error al obtener viajes")
-                swipeRefreshLayout.isRefreshing = false
-                Toast.makeText(context,"Ha ocurrido un error", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<List<ViajeInicio>>, t: Throwable) {
+                    Log.e("Viajes","Error al obtener viajes")
+                    swipeRefreshLayout.isRefreshing = false
+                    Toast.makeText(context,"Ha ocurrido un error con viajes pasajero en ViajesFragment", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+
     }
 
     companion object {

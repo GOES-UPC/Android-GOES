@@ -75,6 +75,9 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:textColor="#454F63"
+                            android:minHeight="30dip"
+                            android:maxHeight="80dip"
+                            android:minLines="1"
                             android:text="Carabayllo" />
 
                         <TextView
@@ -82,7 +85,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#454F63"
-                            android:text="09:00 am" />
+                            android:text="09:00 am"
+                            android:layout_gravity="center"/>
                     </LinearLayout>
 
                     <ImageView
@@ -102,14 +106,19 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:textColor="#454F63"
-                            android:text="UPC San Miguel" />
+                            android:text="UPC San Miguel"
+                            android:minHeight="30dip"
+                            android:maxHeight="80dip"
+                            android:minLines="1"
+                            />
 
                         <TextView
                             android:id="@+id/miviajecond_horadestino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#454F63"
-                            android:text="11:00 am" />
+                            android:text="11:00 am"
+                            android:layout_gravity="center"/>
                     </LinearLayout>
 
                 </LinearLayout>
