@@ -6,11 +6,11 @@ data class SolicitudRequest (
     var mensaje: String,
     var pasajeroId: Long,
     var viajeId: Long,
-    var paradaEncuentroId: Long
+    var puntoEncuentro: Parada
 
     ): Serializable{
     override fun toString(): String {
-        return "SolicitudRequest(mensaje='$mensaje', pasajeroId=$pasajeroId, viajeId=$viajeId, paradaEncuentroId=$paradaEncuentroId)"
+        return "SolicitudRequest(mensaje='$mensaje', pasajeroId=$pasajeroId, viajeId=$viajeId, puntoEncuentro=$puntoEncuentro)"
     }
 
 }

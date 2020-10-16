@@ -271,6 +271,11 @@ class Post : AppCompatActivity() {
         }
 
         postBtn.setOnClickListener {
+            if(origen_hora.text.isNullOrEmpty() || destino_hora.text.isNullOrEmpty() || description.text.isNullOrEmpty() || fecha_viaje.text.isNullOrEmpty())
+            {
+                Toast.makeText(this, "Complete todos los campos",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             publicarViaje(usuarioid)
         }
         img_btn_ida.setOnClickListener{

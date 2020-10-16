@@ -11,10 +11,7 @@ import com.simplife.skip.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -31,10 +28,7 @@ import com.simplife.skip.interfaces.GoogleMapDirections
 import com.simplife.skip.interfaces.SolicitudApiService
 import com.simplife.skip.interfaces.StaticMapApiService
 import com.simplife.skip.interfaces.ViajeApiService
-import com.simplife.skip.models.LoginEntity
-import com.simplife.skip.models.Solicitud
-import com.simplife.skip.models.SolicitudRequest
-import com.simplife.skip.models.Viaje
+import com.simplife.skip.models.*
 import com.simplife.skip.util.API_KEY
 import com.simplife.skip.util.Resenas_Data
 import com.simplife.skip.util.URL_API
@@ -72,6 +66,8 @@ class ViajeDetail : AppCompatActivity() {
     private lateinit var edit: SharedPreferences.Editor
 
     private lateinit var mapFragment :SupportMapFragment
+    private lateinit var et_dialog_solicitar_message : EditText
+    private lateinit var dialog :AlertDialog
 
     @SuppressLint("MissingPermission")
     private val mapCallback = OnMapReadyCallback{ googleMap ->
@@ -234,7 +230,8 @@ class ViajeDetail : AppCompatActivity() {
     fun solicitarViaje()
     {
 
-        var solicitd = SolicitudRequest(mensaje = "Llevame po favo",pasajeroId = prefs.getLong("idusuario",0L), viajeId = viajeid, paradaEncuentroId = 1)
+        val parada = Parada(latitud = 12.131231,longitud = 13.123213,ubicacion = "En algun lugar de un gran pais")
+        var solicitd = SolicitudRequest(mensaje = et_dialog_solicitar_message.text.toString(),pasajeroId = prefs.getLong("idusuario",0L), viajeId = viajeid, puntoEncuentro = parada)
 
         solicitudService.solicitarViaje(solicitd).enqueue(object : Callback<Solicitud> {
             override fun onResponse(call: Call<Solicitud>?, response: Response<Solicitud>?) {
@@ -243,6 +240,7 @@ class ViajeDetail : AppCompatActivity() {
                     Toast.makeText(this@ViajeDetail, "No se puede solicitar un viaje propio", Toast.LENGTH_SHORT).show()
                 }
                 Log.i("Solicitud",soli.toString())
+                dialog.dismiss()
                 finish()
             }
             override fun onFailure(call: Call<Solicitud>?, t: Throwable?) {
@@ -263,11 +261,13 @@ class ViajeDetail : AppCompatActivity() {
         val view  = inflater.inflate(R.layout.dialog_solicitar,null)
         builer.setView(view)
 
-        val dialog =  builer.create()
+        dialog =  builer.create()
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
 
         val staticMap = view.findViewById(R.id.iv_dialog_map) as ImageView
         val solicitarButton = view.findViewById(R.id.btn_dialog_solicitar) as Button
+        et_dialog_solicitar_message = view.findViewById(R.id.et_solicitar_mensaje)
         var center = ""
         var zoom = ""
         var size = ""
@@ -281,6 +281,11 @@ class ViajeDetail : AppCompatActivity() {
             .into(staticMap)
 
         solicitarButton.setOnClickListener {
+            if (et_dialog_solicitar_message.text.isNullOrEmpty())
+            {
+                Toast.makeText(this,"Complete los campos",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             solicitarViaje()
         }
     }

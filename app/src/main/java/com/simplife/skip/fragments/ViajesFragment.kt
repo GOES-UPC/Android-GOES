@@ -114,12 +114,10 @@ class ViajesFragment : Fragment() {
                     Log.i("Viajes",viajes.toString())
                     if(viajes!= null)
                     {
-
                             misviajesAdapterConductor = MisViajeCondRecyclerAdapter()
                             recyclerView.adapter = misviajesAdapterConductor
                             misviajesAdapterConductor.submitList(viajes)
                             Log.i("Viajes","Es conductor")
-
 
                         swipeRefreshLayout.isRefreshing = false
                     }
