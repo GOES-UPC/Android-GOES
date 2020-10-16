@@ -162,14 +162,14 @@
                             app:srcCompat="@drawable/left" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="0dp"
                                 android:orientation="horizontal">
 
 
@@ -218,10 +218,10 @@
                                 android:background="@drawable/divider" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="0dp"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -229,8 +229,8 @@
                                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                                     android:layout_width="135dp"
                                     android:layout_height="wrap_content"
-                                    android:hint="Punto Destino"
-                                    android:padding="3dp"
+                                    android:hint="Seleccione un punto Destino"
+                                    android:padding="2dp"
                                     android:textSize="12.5dp"
                                     android:textColor="#454F63"
                                     android:textColorHint="#88787474"
@@ -258,7 +258,15 @@
                             </LinearLayout>
 
                         </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/img_btn_ida"
+                            android:layout_width="fill_parent"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="fill_parent"
+                            android:background="@drawable/ida"
+                            ></ImageButton>
                     </LinearLayout>
+
 
                 </LinearLayout>
 

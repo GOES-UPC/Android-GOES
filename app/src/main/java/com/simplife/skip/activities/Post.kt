@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,17 +23,20 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.PolyUtil
 import com.simplife.skip.R
+import com.simplife.skip.interfaces.GoogleMapDirections
+import com.simplife.skip.interfaces.StaticMapApiService
 import com.simplife.skip.interfaces.UsuarioApiService
 import com.simplife.skip.interfaces.ViajeApiService
 import com.simplife.skip.models.Parada
 import com.simplife.skip.models.Usuario
 import com.simplife.skip.models.Viaje
 import com.simplife.skip.models.ViajeRequest
+import com.simplife.skip.util.API_KEY
 import com.simplife.skip.util.URL_API
+import com.simplife.skip.util.URL_API_GOOGLE_MAPS
 import kotlinx.android.synthetic.main.activity_post.*
 import kotlinx.android.synthetic.main.activity_viaje_detail.*
 import retrofit2.Call
@@ -55,16 +59,17 @@ class Post : AppCompatActivity() {
     private lateinit var origen_hora: EditText
     private lateinit var destino_hora: EditText
     private lateinit var fecha_viaje: EditText
+    private lateinit var img_btn_ida : ImageButton
+
 
     private lateinit var origenSpinner: Spinner
 
-
     private lateinit var usuarioService: UsuarioApiService
-    lateinit var viajeService: ViajeApiService
+    private lateinit var viajeService: ViajeApiService
+    private lateinit var googleMapService : StaticMapApiService
 
 
     var usuario: Usuario? = null
-
 
     private lateinit var mylocation: LatLng
 
@@ -77,12 +82,16 @@ class Post : AppCompatActivity() {
     private var markerOrigen: Marker? = null
     private var markerDestino: Marker? = null
 
+    private var polyline :Polyline? = null
+
+
     private lateinit var mapFragment: SupportMapFragment
 
     //SharedPreferences
     private lateinit var prefs: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
 
+    private var ida  = true
 
     @SuppressLint("MissingPermission")
     private val mapCallback = OnMapReadyCallback { googleMap ->
@@ -91,7 +100,7 @@ class Post : AppCompatActivity() {
         googleMap.uiSettings.isMapToolbarEnabled = true
 
         val Lima = LatLng(-12.0554671, -77.0431111)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Lima, 11.0f))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Lima, 13.0f))
 
 
 
@@ -107,15 +116,14 @@ class Post : AppCompatActivity() {
                 markerOrigen = googleMap.addMarker(markerOptions)
                 //origen.setText(markerOrigen!!.position.toString())
             } else {
-
                 markerOptions.title("Destino")
                 markerDestino = googleMap.addMarker(markerOptions)
                 if (!geocoder.getFromLocation(it.latitude, it.longitude, 1).isEmpty()) {
                     val addres = geocoder.getFromLocation(it.latitude, it.longitude, 1).get(0)!!
                         .getAddressLine(0)!!.toString()
                     destino.setText(addres)
+                    dibujarRuta(markerOrigen!!.position,markerDestino!!.position,googleMap)
                 }
-                //destino.setText(markerDestino!!.position.toString())
             }
         }
 
@@ -134,6 +142,7 @@ class Post : AppCompatActivity() {
                             1
                         ).get(0)!!.getAddressLine(0)!!.toString()
                         destino.setText(addres)
+                        dibujarRuta(markerOrigen!!.position,markerDestino!!.position,googleMap)
                     }
                 }
             }
@@ -146,33 +155,6 @@ class Post : AppCompatActivity() {
         })
     }
 
-
-    @SuppressLint("MissingPermission")
-    private fun traerUbicacion() {
-
-        locationRequest = LocationRequest.create()
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-        locationRequest.setInterval(20 * 1000)
-        locationCallback = object : LocationCallback() {
-
-            override fun onLocationResult(locationResult: LocationResult?) {
-                if (locationResult == null) {
-                    return;
-                }
-                for (location in locationResult.getLocations()) {
-                    if (location != null) {
-                        mylocation = LatLng(location.latitude, location.longitude)
-                    }
-                }
-                super.onLocationResult(locationResult)
-            }
-        }
-        mFusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.getMainLooper()
-        )
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,17 +175,24 @@ class Post : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+        val retrofitMaps: Retrofit = Retrofit.Builder()
+            .baseUrl(URL_API_GOOGLE_MAPS)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
         usuarioService = retrofit.create(UsuarioApiService::class.java)
         viajeService = retrofit.create(ViajeApiService::class.java)
+        googleMapService = retrofitMaps.create(StaticMapApiService::class.java)
+
+        mFusedLocationClient = FusedLocationProviderClient(this)
 
         val array =
-            arrayListOf("Sede:", "Moterrico", "San Isidro", "San Miguel", "Villa", "Personalizado")
+            arrayListOf("Sede:", "Moterrico", "San Isidro", "San Miguel", "Villa")
         val arrayLatLng = arrayListOf(
             null,
             LatLng(-12.1040839, -76.9630173),
             LatLng(-12.0874592, -77.0500584),
-            LatLng(-12.077252, -77.0934926),
+            LatLng(-12.076169,-77.0935428),
             LatLng(-12.1978174, -77.0086914)
         )
 
@@ -216,9 +205,9 @@ class Post : AppCompatActivity() {
         origen_hora = findViewById(R.id.post_hora_origen)
         destino_hora = findViewById(R.id.post_hora_destino)
         fecha_viaje = findViewById(R.id.fechaProgrmada)
+        img_btn_ida = findViewById(R.id.img_btn_ida)
 
-
-        post_author.setText(prefs.getString("nombres","Nombre"))
+        post_author.setText(prefs.getString("nombres","Nombre")+" "+prefs.getString("apellidos",""))
 
         Glide.with(applicationContext)
             .applyDefaultRequestOptions(requestOptions)
@@ -227,12 +216,9 @@ class Post : AppCompatActivity() {
 
         geocoder = Geocoder(this, Locale.getDefault())
 
-
         val adapter = ArrayAdapter<String>(this, R.layout.custom_spinner_layout, array)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         origenSpinner.adapter = adapter
-
-
         origenSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -264,6 +250,8 @@ class Post : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
+
+        traerUbicacion()
         mapFragment = supportFragmentManager.findFragmentById(R.id.mapPostViaje) as SupportMapFragment
         mapFragment?.getMapAsync(mapCallback)
 
@@ -278,22 +266,82 @@ class Post : AppCompatActivity() {
             timePickerDestino()
         }
 
-
-
-
-
-
-
         backbtn.setOnClickListener {
             finish()
         }
 
         postBtn.setOnClickListener {
             publicarViaje(usuarioid)
-            //
         }
+        img_btn_ida.setOnClickListener{
+            if (ida)
+            {
+                img_btn_ida.setBackgroundResource(R.drawable.vuelta)
+            }
+            else{
+                img_btn_ida.setBackgroundResource(R.drawable.ida)
+            }
+            ida = !ida
+        }
+    }
 
 
+    private fun dibujarRuta(origen:LatLng,destino:LatLng,googleMap: GoogleMap)
+    {
+        val origen_lat = origen.latitude
+        val origen_lng = origen.longitude
+        val destino_lat = destino.latitude
+        val destino_lng = destino.longitude
+
+        googleMapService.getRoutes("$origen_lat,$origen_lng","$destino_lat,$destino_lng","driving", API_KEY).enqueue(object :Callback<GoogleMapDirections>{
+            override fun onResponse(call: Call<GoogleMapDirections>, response: Response<GoogleMapDirections>) {
+                val googleMapDirection = response.body()
+                val points = googleMapDirection!!.routes[0].overview_polyline.points
+                Log.i("Entro", points)
+                if(polyline == null)
+                {
+                    polyline = googleMap.addPolyline(PolylineOptions().addAll(PolyUtil.decode(points)).width(7f).color(Color.RED))
+                }
+                else
+                {
+                    polyline!!.remove()
+                    polyline = null
+                    polyline = googleMap.addPolyline(PolylineOptions().addAll(PolyUtil.decode(points)).width(5f).color(Color.RED))
+                }
+            }
+            override fun onFailure(call: Call<GoogleMapDirections>, t: Throwable) {
+                Log.e("F", "LA ptmr")
+                Log.e("F", t.message.toString())
+
+            }
+        })
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun traerUbicacion() {
+
+        locationRequest = LocationRequest.create()
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        locationRequest.setInterval(20 * 1000)
+        locationCallback = object : LocationCallback() {
+
+            override fun onLocationResult(locationResult: LocationResult?) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (location in locationResult.getLocations()) {
+                    if (location != null) {
+                        mylocation = LatLng(location.latitude, location.longitude)
+                    }
+                }
+                super.onLocationResult(locationResult)
+            }
+        }
+        mFusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
     }
 
 
@@ -305,9 +353,16 @@ class Post : AppCompatActivity() {
         var inicio  = Parada(origenSpinner.selectedItem.toString(), markerOrigen!!.position.latitude, markerDestino!!.position.longitude)
         var fin  = Parada(destino.text.toString(), markerDestino!!.position.latitude,markerDestino!!.position.longitude)
 
-
-        var viajeRequest = ViajeRequest(usuarioid, true, inicio, fin, "2 horas",
-            distancia.toFloat() , description.text.toString(), fecha_viaje.text.toString(), origen_hora.text.toString(), destino_hora.text.toString())
+        var viajeRequest : ViajeRequest
+        if(ida)
+        {
+             viajeRequest = ViajeRequest(usuarioid, true, inicio, fin, "2 horas",
+                distancia.toFloat() , description.text.toString(), fecha_viaje.text.toString(), origen_hora.text.toString(), destino_hora.text.toString())
+        }
+        else{
+            viajeRequest = ViajeRequest(usuarioid, true, fin, inicio, "2 horas",
+                distancia.toFloat() , description.text.toString(), fecha_viaje.text.toString(), origen_hora.text.toString(), destino_hora.text.toString())
+        }
 
         viajeService.publicarViaje(viajeRequest).enqueue(object : Callback<Viaje> {
             override fun onResponse(call: Call<Viaje>?, response: Response<Viaje>?) {

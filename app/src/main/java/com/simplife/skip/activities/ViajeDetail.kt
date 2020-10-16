@@ -95,10 +95,13 @@ class ViajeDetail : AppCompatActivity() {
         prefs = getSharedPreferences("user", Context.MODE_PRIVATE)
         edit= prefs.edit()
 
+
+
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(URL_API)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
 
         val retrofitStaticMap = Retrofit.Builder()
             .baseUrl(URL_API_GOOGLE_MAPS)
@@ -183,6 +186,7 @@ class ViajeDetail : AppCompatActivity() {
         var size= "800x800"
         var key = API_KEY
 
+
         Glide.with(applicationContext)
         .applyDefaultRequestOptions(requestOptions)
         .load("https://maps.googleapis.com/maps/api/staticmap?center=$center&zoom=$zoom&size=$size&key=$key")
@@ -260,6 +264,7 @@ class ViajeDetail : AppCompatActivity() {
         dialog.show()
 
         val staticMap = view.findViewById(R.id.iv_dialog_map) as ImageView
+        val solicitarButton = view.findViewById(R.id.btn_dialog_solicitar) as Button
         var center = ""
         var zoom = ""
         var size = ""
@@ -272,7 +277,8 @@ class ViajeDetail : AppCompatActivity() {
             .load("https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=11&size=800x800&maptype=roadmap&key=AIzaSyBBqph0jQU_8qqrqypG35bQazc29sUanjo")
             .into(staticMap)
 
-
+        solicitarButton.setOnClickListener {
+            solicitarViaje()
+        }
     }
-
 }

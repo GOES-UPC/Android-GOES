@@ -110,7 +110,11 @@
                                 android:layout_width="135dp"
                                 android:layout_height="wrap_content"
                                 android:text="Carabayllo"
-                                android:textColor="#454F63" />
+                                android:textColor="#454F63"
+                                android:minHeight="30dip"
+                                android:maxHeight="70dip"
+                                android:minLines="1"
+                                />
 
                             <TextView
                                 android:id="@+id/viaje_hora_origen"
@@ -139,7 +143,10 @@
                                 android:layout_width="134dp"
                                 android:layout_height="wrap_content"
                                 android:text="UPC San Miguel"
-                                android:textColor="#454F63" />
+                                android:textColor="#454F63"
+                                android:minHeight="30dip"
+                                android:maxHeight="70dip"
+                                android:minLines="1"/>
 
                             <TextView
                                 android:id="@+id/viaje_hora_destino"
