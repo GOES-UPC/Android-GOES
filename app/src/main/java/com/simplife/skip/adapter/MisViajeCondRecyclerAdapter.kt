@@ -9,11 +9,12 @@ import com.simplife.skip.R
 import com.simplife.skip.activities.StartViajeActivity
 import com.simplife.skip.activities.ViajeDetail
 import com.simplife.skip.models.Viaje
+import com.simplife.skip.models.ViajeInicio
 import kotlinx.android.synthetic.main.myviaje_conductor_list_item.view.*
 
 class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items : List<Viaje> = ArrayList()
+    private var items : List<ViajeInicio> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MiViajeViewHolder(
@@ -33,7 +34,7 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    fun submitList(viajeList: List<Viaje>){
+    fun submitList(viajeList: List<ViajeInicio>){
         items = viajeList
     }
 
@@ -46,10 +47,10 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         val miviajeHoraOrigen = itemView.miviajecond_horaorigen
         val miviajeHoraDestino = itemView.miviajecond_horadestino
 
-        fun bind(viaje: Viaje){
-            //miviajeSource.setText(viaje.conductor.ubicacion)
-            miviajeDestiny.setText(viaje.conductor.sede)
-            miviajeHoraDestino.setText(viaje.horaLlegada)
+        fun bind(viaje: ViajeInicio){
+            miviajeSource.setText(viaje.paradas.get(0).ubicacion)
+            miviajeDestiny.setText(viaje.paradas.get(1).ubicacion)
+            miviajeHoraDestino.setText(viaje.horaFin)
             miviajeHoraOrigen.setText(viaje.horaInicio)
 
             itemView.setOnClickListener{

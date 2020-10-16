@@ -118,6 +118,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_pasajeros_a_recoger"
             android:layout_width="match_parent"
+            android:layout_gravity="center"
             android:layout_height="300dp"
             android:layout_marginHorizontal="0dp" />
 

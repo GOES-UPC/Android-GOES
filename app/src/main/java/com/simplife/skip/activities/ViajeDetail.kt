@@ -235,6 +235,9 @@ class ViajeDetail : AppCompatActivity() {
         solicitudService.solicitarViaje(solicitd).enqueue(object : Callback<Solicitud> {
             override fun onResponse(call: Call<Solicitud>?, response: Response<Solicitud>?) {
                 val soli = response!!.body()
+                if(soli == null){
+                    Toast.makeText(this@ViajeDetail, "No se puede solicitar un viaje propio", Toast.LENGTH_SHORT).show()
+                }
                 Log.i("Solicitud",soli.toString())
                 finish()
             }

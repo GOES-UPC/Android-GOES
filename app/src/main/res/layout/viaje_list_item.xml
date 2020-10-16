@@ -110,6 +110,9 @@
                                 android:layout_width="135dp"
                                 android:layout_height="wrap_content"
                                 android:text="Carabayllo"
+                                android:minHeight="30dip"
+                                android:maxHeight="80dip"
+                                android:minLines="1"
                                 android:textColor="#454F63" />
 
                             <TextView
@@ -139,6 +142,9 @@
                                 android:layout_width="134dp"
                                 android:layout_height="wrap_content"
                                 android:text="UPC San Miguel"
+                                android:minHeight="30dip"
+                                android:maxHeight="80dip"
+                                android:minLines="1"
                                 android:textColor="#454F63" />
 
                             <TextView

@@ -80,7 +80,7 @@ class PassengerListFragment : Fragment() {
     fun loadFragment(fragment: Fragment){
         requireActivity().supportFragmentManager.beginTransaction().also{
                 fragmentTransaction ->
-            fragmentTransaction.replace(R.id.fragment_container_register, fragment)
+            fragmentTransaction.replace(R.id.fragment_container_en_viaje, fragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
