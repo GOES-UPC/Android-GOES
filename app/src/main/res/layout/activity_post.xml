@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/gradient_background_blue"
+    android:layout_height="match_parent"
+    tools:context=".activities.Post">
+
+    <ImageButton
+        android:id="@+id/postback_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="360dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="#00FFFFFF"
+        app2:srcCompat="@drawable/ic_arrow_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="546dp"
+        app:cardBackgroundColor="#FFFF"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/postback_button">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="240dp"
+                android:layout_marginBottom="200dp"
+                android:gravity="end"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/post_btn"
+                    android:layout_width="103dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/mybutton"
+                    android:text="Publicar"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="412dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/post_image"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        app2:civ_border_color="#FF000000"
+                        app2:civ_border_width="0dp" />
+
+                    <LinearLayout
+                        android:id="@+id/postcontainer1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/post_author"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mitch Tabian"
+                            android:textColor="#454F63"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/post_description"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="15dp"
+                        android:inputType="textNoSuggestions"
+                        android:hint="Descripcion del viaje"
+                        android:textColor="#454F63"
+                        android:textColorHint="#88787474"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/fechaProgrmada"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:hint="Fecha programa para el viaje"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:longClickable="false"
+                        android:cursorVisible="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:textColor="#454F63"
+                        android:textColorHint="#88787474"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/leftimagepost"
+                            android:layout_width="56dp"
+                            android:layout_height="70dp"
+                            app:srcCompat="@drawable/left" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="30dp"
+                                android:orientation="horizontal">
+
+
+                                <!--<EditText
+                                    android:id="@+id/post_origen"
+                                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                    android:layout_width="135dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:hint="Punto Partida"
+                                    android:padding="4dp"
+                                    android:textColor="#454F63"
+                                    android:textColorHint="#88787474"
+                                    android:textSize="12.5sp" />-->
+                                <Spinner
+                                    android:id="@+id/origen_spinner"
+                                    android:layout_width="135dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginBottom="5dp"
+                                    ></Spinner>
+
+                                <EditText
+                                    android:id="@+id/post_hora_origen"
+                                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                    android:layout_width="115dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="09:00:00 am"
+                                    android:padding="7dp"
+                                    android:textColor="#454F63"
+                                    android:inputType="none"
+                                    android:focusable="false"
+                                    android:clickable="true"
+                                    android:cursorVisible="false"
+
+                                    android:longClickable="false"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    android:textColorHint="#88787474"
+                                    android:textSize="12.5sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/imageViewpost"
+                                android:layout_width="250dp"
+                                android:layout_height="1dp"
+                                android:layout_marginRight="25dp"
+                                android:background="@drawable/divider" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="30dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/post_destino"
+                                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                    android:layout_width="135dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Punto Destino"
+                                    android:padding="3dp"
+                                    android:textSize="12.5dp"
+                                    android:textColor="#454F63"
+                                    android:textColorHint="#88787474"
+                                    android:minHeight="30dip"
+                                    android:maxHeight="50dip"
+                                    android:minLines="1"
+                                    />
+
+                                <EditText
+                                    android:id="@+id/post_hora_destino"
+                                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                    android:layout_width="115dp"
+                                    android:layout_height="fill_parent"
+                                    android:hint="11:00:00 am"
+                                    android:inputType="none"
+                                    android:focusable="false"
+                                    android:clickable="true"
+                                    android:cursorVisible="false"
+
+                                    android:longClickable="false"
+                                    android:padding="1dp"
+                                    android:textColor="#454F63"
+                                    android:textColorHint="#88787474"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <fragment
+        android:id="@+id/mapPostViaje"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="15dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    app:cardPreventCornerOverlap="false"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="10dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="412dp">
+
+            <LinearLayout
+                android:layout_width="414dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto "
+                    android:id="@+id/viaje_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
+
+
+                <LinearLayout
+                    android:id="@+id/container1"
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/viaje_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mitch Tabian"
+                        android:textColor="#454F63"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/viaje_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="The Title of a Blog"
+                        android:textColor="#7C8088"
+                        android:textSize="10sp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/viaje_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="Nuevo Viaje"
+                    android:textColor="#78849E" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/leftimage"
+                        android:layout_width="56dp"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/left" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="30dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/viaje_origen"
+                                android:layout_width="135dp"
+                                android:layout_height="wrap_content"
+                                android:text="Carabayllo"
+                                android:textColor="#454F63" />
+
+                            <TextView
+                                android:id="@+id/viaje_hora_origen"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="09:00 am"
+                                android:textColor="#454F63" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/divider" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="30dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/viaje_destino"
+                                android:layout_width="134dp"
+                                android:layout_height="wrap_content"
+                                android:text="UPC San Miguel"
+                                android:textColor="#454F63" />
+
+                            <TextView
+                                android:id="@+id/viaje_hora_destino"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="11:00 am"
+                                android:textColor="#454F63" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="end">
+
+                <TextView
+                    android:id="@+id/contador_resenas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#78849E"
+                    android:text="12"
+                    android:layout_marginRight="5dp"/>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_marginTop="2dp"
+                    android:layout_width="20dp"
+                    android:layout_height="15dp"
+                    app:srcCompat="@drawable/comment" />
+
+                <TextView
+                    android:id="@+id/contador_solis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#78849E"
+                    android:text="4"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"/>
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_marginTop="2dp"
+                    android:layout_width="20dp"
+                    android:layout_height="15dp"
+                    app:srcCompat="@drawable/solis"
+                    android:layout_marginRight="15dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

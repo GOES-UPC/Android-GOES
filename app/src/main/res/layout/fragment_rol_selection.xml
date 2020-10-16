@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.RolSelectionFragment"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selección de rol"
+        android:layout_marginHorizontal="20dp"
+        android:textSize="24sp"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/pasajero_container"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="30dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+
+        >
+
+    <ImageButton
+        android:id="@+id/rol_pasajero_button"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:scaleType="center"
+        android:background="#FFF"
+        android:src="@drawable/pasajero_imagen"
+        android:layout_gravity="center"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pasajero"
+            android:textStyle="bold"
+            android:textColor="#FFF"
+            android:textSize="30sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/conductor_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="30dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="center"
+        >
+        <ImageButton
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:scaleType="center"
+            android:src="@drawable/conductor_imagen"
+            android:layout_gravity="center"
+            android:background="#FFF"
+            android:id="@+id/rol_conductor_button"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conductor"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="#FFF"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

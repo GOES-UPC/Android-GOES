@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:backgroundTint="#00FFFFFF"
+    app:cardBackgroundColor="#FFFF"
+    app:cardCornerRadius="20dp">
+
+    <TextView
+        android:id="@+id/tv_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="30dp"
+        android:text="Califica este viaje"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"></TextView>
+
+
+    <EditText
+        android:id="@+id/et_solicitar_mensaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="70dp"
+        android:hint="Escribe tu opiniòn"
+
+        android:inputType="textNoSuggestions"
+        android:maxHeight="60dip"
+        android:minHeight="30dip"
+        android:minLines="1"></EditText>
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rating_viaje"
+        android:numStars="5"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginTop="150dp"
+        android:isIndicator="true"
+        android:stepSize="0.5"
+        />
+
+    <Button
+        android:id="@+id/btn_dialog_solicitar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="150dp"
+        android:layout_marginTop="220dp"
+        android:background="@drawable/mybutton"
+        android:padding="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Guardar"
+        android:textColor="#FFFF"></Button>
+
+</androidx.cardview.widget.CardView>

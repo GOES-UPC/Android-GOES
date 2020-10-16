@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background_blue"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    tools:context=".fragments.PerfilFragment">
+
+    <ImageView
+        android:id="@+id/perfil_photo"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F3F3F3"
+        android:layout_marginTop="280dp"
+        app2:cardCornerRadius="20dp">
+
+        <ImageButton
+            android:id="@+id/perfil_settings"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_settings"
+            android:textColor="#FFFF"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/perfil_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sebastian Pinillos"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/perfil_ubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carabayllo, Lima"
+                android:textSize="11sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/perfil_ginfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Informacion General"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/univer_img"
+                        android:layout_width="20dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/univer_asset" />
+
+                    <TextView
+                        android:id="@+id/sede"
+                        android:text="Estudia en "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:id="@+id/perfil_sede"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UPC San Miguel"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/fb_image"
+                        android:layout_width="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="3dp"
+                        android:src="@drawable/fb_asset" />
+
+                    <TextView
+                        android:id="@+id/fb"
+                        android:text="Su facebook es "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:id="@+id/perfil_fb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/SebastianPinillos"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/opciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#EDEDED"
+        android:padding="20dp"
+        app2:cardCornerRadius="15dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginLeft="200dp"
+        app2:cardElevation="10dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="15dp">
+
+
+            <LinearLayout
+                android:id="@+id/editar_perfil"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_mode_edit_"/>
+
+                <TextView
+                    android:id="@+id/editar_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Editar perfil"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cerrar_sesion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/logout" />
+
+                <TextView
+                    android:id="@+id/cerrar_sesion_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cerrar sesion"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

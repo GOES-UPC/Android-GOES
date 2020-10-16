@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto "
+        android:id="@+id/avatar_pasajero"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
+
+    <LinearLayout
+        android:id="@+id/container1"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/pasajero_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mitch Tabian"
+            android:textColor="#FFFF"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/pasajero_punto_encuentro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Av. Izaguirre"
+            android:textColor="#E3E3E3"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/pasajero_estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="En el viaje"
+            android:textColor="#43FB00"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_gravity="center"
+       android:paddingHorizontal="3dp"
+       >
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="En viaje"
+       />
+   </LinearLayout>
+
+
+
+</LinearLayout>
