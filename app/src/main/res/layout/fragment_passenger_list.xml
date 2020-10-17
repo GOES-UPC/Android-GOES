@@ -58,7 +58,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
@@ -66,6 +66,9 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:text="Carabayllo"
+                        android:minLines="1"
+                        android:minHeight="30dp"
+                        android:maxHeight="80dp"
                         android:textColor="#FFFF" />
 
 
@@ -101,6 +104,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="11:00 am"
+                        android:minLines="1"
+                        android:minHeight="30dp"
+                        android:maxHeight="80dp"
                         android:textColor="#FFFF" />
                 </LinearLayout>
 
