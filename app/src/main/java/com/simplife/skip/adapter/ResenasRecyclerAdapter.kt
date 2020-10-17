@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.simplife.skip.*
+import com.simplife.skip.models.Reporte
 import com.simplife.skip.models.Resena
 import kotlinx.android.synthetic.main.resena_item_list.view.*
 
 class ResenasRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items : List<Resena> = ArrayList()
+    private var items : List<Reporte> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ResenaViewHolder(
@@ -31,7 +32,7 @@ class ResenasRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
     }
-    fun submitList(resenaList: List<Resena>){
+    fun submitList(resenaList: List<Reporte>){
         items = resenaList
     }
 
@@ -45,12 +46,14 @@ class ResenasRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val resenaPublish = itemView.resena_title
         val resenaAuthor = itemView.resena_author
 
-        fun bind(resena: Resena){
+        fun bind(resena: Reporte){
 
-            resenaBody.setText(resena.body)
+            resenaBody.setText(resena.contenido)
             resenaValoracion.setText(resena.valoracion.toString())
-            resenaPublish.setText(resena.publish)
-            resenaAuthor.setText(resena.username)
+            resenaPublish.setText(resena.viaje.fechaPublicacion)
+            val nombreCompleto: String
+            nombreCompleto = resena.usuario.nombres + resena.usuario.apellidos
+            resenaAuthor.setText(nombreCompleto)
 
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
@@ -58,7 +61,7 @@ class ResenasRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
-                .load(resena.image)
+                .load(resena.usuario.imagen)
                 .into(resenaUserImage)
         }
     }

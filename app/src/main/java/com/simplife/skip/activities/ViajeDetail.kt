@@ -25,10 +25,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.simplife.skip.adapter.ResenasRecyclerAdapter
-import com.simplife.skip.interfaces.GoogleMapDirections
-import com.simplife.skip.interfaces.SolicitudApiService
-import com.simplife.skip.interfaces.StaticMapApiService
-import com.simplife.skip.interfaces.ViajeApiService
+import com.simplife.skip.adapter.ViajeRecyclerAdapter
+import com.simplife.skip.interfaces.*
 import com.simplife.skip.models.*
 import com.simplife.skip.util.API_KEY
 import com.simplife.skip.util.Resenas_Data
@@ -53,6 +51,7 @@ class ViajeDetail : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var viajeService: ViajeApiService
+    private lateinit var reportService: ReportApiService
     private lateinit var solicitudService: SolicitudApiService
     private lateinit var staticmapService :StaticMapApiService
 
@@ -120,6 +119,7 @@ class ViajeDetail : AppCompatActivity() {
 
         viajeService = retrofit.create(ViajeApiService::class.java)
         solicitudService = retrofit.create(SolicitudApiService::class.java)
+        reportService = retrofit.create(ReportApiService::class.java)
         staticmapService = retrofitStaticMap.create(StaticMapApiService::class.java)
 
 
@@ -158,10 +158,7 @@ class ViajeDetail : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         //val topSpacingDecoration = TopSpacingItemDecoration(30)
         //recyclerView.addItemDecoration(topSpacingDecoration)
-        viajeAdapter = ResenasRecyclerAdapter()
-        recyclerView.adapter = viajeAdapter
-        val data = Resenas_Data.createResenas()
-        viajeAdapter.submitList(data)
+        resenasData()
         //Fin de lista de Resenas
 
 
@@ -176,6 +173,24 @@ class ViajeDetail : AppCompatActivity() {
         /*mapFragment = supportFragmentManager.findFragmentById(R.id.mapViajeDetail) as SupportMapFragment
         mapFragment?.getMapAsync(mapCallback)*/
 
+    }
+
+    fun resenasData() {
+        reportService!!.getReportesporViaje(viajeid).enqueue(object: Callback<List<Reporte>> {
+            override fun onResponse(call: Call<List<Reporte>>, response: Response<List<Reporte>>) {
+                val viajesaux = response.body()
+
+                var sorted = viajesaux!!.sortedWith(compareByDescending ({it.id}))
+
+                viajeAdapter = ResenasRecyclerAdapter()
+                recyclerView.adapter = viajeAdapter
+                viajeAdapter.submitList(viajesaux)
+            }
+            override fun onFailure(call: Call<List<Reporte>>?, t: Throwable?) {
+                t?.printStackTrace()
+                Toast.makeText(applicationContext,"Ha ocurrido un error",Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 
