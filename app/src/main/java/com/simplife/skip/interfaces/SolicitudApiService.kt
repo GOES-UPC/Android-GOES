@@ -24,4 +24,7 @@ interface SolicitudApiService {
                                  @Query("pasajeroId") pasajeroId: Long,
                                  @Query("estado") estado: String): Call<Int>
 
+    @PUT("api/auth/skip/solicitudes/pasajeros/endestino")
+    fun pasajerosEnDestino(@Query("viajeId") viajeId: Long): Call<Int>
+
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app2="http://schemas.android.com/apk/res-auto "
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,14 +33,14 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto "
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/viaje_image"
                     android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_height="31dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp" />
+                    app2:civ_border_color="#FF000000"
+                    app2:civ_border_width="2dp" />
 
 
                 <LinearLayout

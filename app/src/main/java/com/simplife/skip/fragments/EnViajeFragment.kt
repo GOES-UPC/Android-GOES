@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.simplife.skip.R
 import com.simplife.skip.adapter.PasajerosEnViajeRecyclerAdapter
+import com.simplife.skip.interfaces.SolicitudApiService
 import com.simplife.skip.interfaces.ViajeApiService
 import com.simplife.skip.models.PasajeroEnLista
 import com.simplife.skip.models.ViajeInicio
@@ -29,6 +30,8 @@ class EnViajeFragment : Fragment() {
 
     lateinit var recyclerPasajerosEnViaje: RecyclerView
     lateinit var adapterPasajerosEnViaje: PasajerosEnViajeRecyclerAdapter
+    val viajeService = ApiClient.retrofit.create(ViajeApiService::class.java)
+    val solicitudService = ApiClient.retrofit.create(SolicitudApiService::class.java)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -94,6 +97,7 @@ class EnViajeFragment : Fragment() {
         dialog = builder.create()
         confirmButton.setOnClickListener{
             finalizarViaje(viajeId, dialog)
+            actualizarPasajerosEnDestino(viajeId)
         }
 
         cancelButton.setOnClickListener{
@@ -107,20 +111,39 @@ class EnViajeFragment : Fragment() {
 
 
     fun finalizarViaje(viajeId: Long, dialog: AlertDialog){
-        val viajeService = ApiClient.retrofit.create(ViajeApiService::class.java)
+
         viajeService.actualizarEstadoViaje(viajeId, "FINALIZADO").enqueue(object: Callback<Int>{
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 if(response.isSuccessful){
                     if(response.body()!! == 1){
-                        Toast.makeText(requireContext(), "El viaje ha finalizado. Todos han llegado a su destino", Toast.LENGTH_SHORT).show()
+
                         dialog.dismiss()
-                        requireActivity().finish()
+
                     }
                 }
             }
 
             override fun onFailure(call: Call<Int>, t: Throwable) {
                 Toast.makeText(requireContext(), "Fallo al finalizar el viaje", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
+    fun actualizarPasajerosEnDestino(viajeId: Long){
+        solicitudService.pasajerosEnDestino(viajeId).enqueue(object: Callback<Int>{
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                if(response.isSuccessful){
+                    if(response.body()!! >= 1){
+                        Toast.makeText(requireContext(), "El viaje ha finalizado. Todos han llegado a su destino", Toast.LENGTH_SHORT).show()
+                        Log.i("En destino", "Pasajeros en destino")
+                        requireActivity().finish()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                Log.i("Fallo", "Pasajeros no estan destino")
             }
         })
     }
