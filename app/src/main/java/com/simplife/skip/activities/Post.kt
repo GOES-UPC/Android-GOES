@@ -355,7 +355,7 @@ class Post : AppCompatActivity() {
         val distancia: Int = 20000
 
 
-        var inicio  = Parada(origenSpinner.selectedItem.toString(), markerOrigen!!.position.latitude, markerDestino!!.position.longitude)
+        var inicio  = Parada("UPC "+ origenSpinner.selectedItem.toString(), markerOrigen!!.position.latitude, markerDestino!!.position.longitude)
         var fin  = Parada(destino.text.toString(), markerDestino!!.position.latitude,markerDestino!!.position.longitude)
 
         var viajeRequest : ViajeRequest

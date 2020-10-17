@@ -15,6 +15,7 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -58,8 +59,7 @@ class ViajeDetail : AppCompatActivity() {
     private lateinit var btn_solicitar : Button
     private lateinit var iv_staticMap : ImageView
 
-    var viaje: Viaje? = null
-    var viajeid = 0L
+      var viajeid = 0L
 
 
     private lateinit var prefs : SharedPreferences
@@ -68,6 +68,9 @@ class ViajeDetail : AppCompatActivity() {
     private lateinit var mapFragment :SupportMapFragment
     private lateinit var et_dialog_solicitar_message : EditText
     private lateinit var dialog :AlertDialog
+
+
+    private lateinit var requestOptions: RequestOptions
 
     @SuppressLint("MissingPermission")
     private val mapCallback = OnMapReadyCallback{ googleMap ->
@@ -91,7 +94,18 @@ class ViajeDetail : AppCompatActivity() {
         prefs = getSharedPreferences("user", Context.MODE_PRIVATE)
         edit= prefs.edit()
 
+        btn_solicitar = findViewById(R.id.btn_solicitar)
+        iv_staticMap = findViewById(R.id.iv_staticmap)
 
+
+        requestOptions = RequestOptions()
+            .placeholder(android.R.color.white)
+            .error(android.R.color.white)
+
+        Glide.with(applicationContext)
+            .applyDefaultRequestOptions(requestOptions)
+            .load(android.R.color.white)
+            .into(iv_staticMap)
 
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(URL_API)
@@ -104,41 +118,35 @@ class ViajeDetail : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-
         viajeService = retrofit.create(ViajeApiService::class.java)
         solicitudService = retrofit.create(SolicitudApiService::class.java)
         staticmapService = retrofitStaticMap.create(StaticMapApiService::class.java)
 
-        val requestOptions = RequestOptions()
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
-
-        btn_solicitar = findViewById(R.id.btn_solicitar)
-        iv_staticMap = findViewById(R.id.iv_staticmap)
-
-        cargarStaticMapRoute()
 
 
 
-        viajeService.getViajeById(viajeid).enqueue(object : Callback<Viaje> {
-            override fun onResponse(call: Call<Viaje>?, response: Response<Viaje>?) {
-                val respuesta = response?.body()
-                viaje = respuesta
+        viajeService.getHomeViajesPorId(viajeid).enqueue(object : Callback<ViajeInicio> {
+            override fun onResponse(call: Call<ViajeInicio>?, response: Response<ViajeInicio>?) {
+                val viaje = response?.body()
 
-                viajedetail_author.setText(viaje?.conductor?.nombres)
+                viajedetail_author.setText(viaje?.nombres)
                 viajedetail_title.setText(viaje?.fechaPublicacion)
                 viajedetail_text.setText(viaje?.descripcion)
-                viajedetail_destino.setText(viaje?.conductor?.sede)
-                //viajedetail_origen.setText(viaje?.conductor?.ubicacion)
-                viajedetail_hora_destino.setText(viaje?.horaLlegada)
+                viajedetail_origen.setText(viaje?.paradas!![0].ubicacion)
+                viajedetail_destino.setText(viaje?.paradas!![1].ubicacion)
+                viajedetail_hora_destino.setText(viaje?.horaFin)
                 viajedetail_hora_origen.setText(viaje?.horaInicio)
 
                 Glide.with(applicationContext)
                     .applyDefaultRequestOptions(requestOptions)
-                    .load(viaje?.conductor?.imagen)
+                    .load(viaje?.imagen)
                     .into(viajedetail_image)
+
+                cargarStaticMapRoute(viaje?.paradas[0],viaje?.paradas[1])
+
+
             }
-            override fun onFailure(call: Call<Viaje>?, t: Throwable?) {
+            override fun onFailure(call: Call<ViajeInicio>?, t: Throwable?) {
                 t?.printStackTrace()
             }
         })
@@ -171,65 +179,35 @@ class ViajeDetail : AppCompatActivity() {
     }
 
 
-    fun cargarStaticMap()
-    {
-        val requestOptions = RequestOptions()
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
 
-        var center = "40.714728,-73.998672"
-        var zoom = "11"
+
+
+    fun cargarStaticMapRoute(origen:Parada, destino:Parada)
+    {
+        var origin = "${origen.latitud},${origen.longitud}"
+        var destination = "${destino.latitud},${destino.longitud}"
         var size= "800x800"
         var key = API_KEY
 
-
-        Glide.with(applicationContext)
-        .applyDefaultRequestOptions(requestOptions)
-        .load("https://maps.googleapis.com/maps/api/staticmap?center=$center&zoom=$zoom&size=$size&key=$key")
-        .into(iv_staticMap)
-
-    }
-
-
-
-    fun cargarStaticMapRoute()
-    {
-        val requestOptions = RequestOptions()
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
-
-        var size= "800x800"
-        var key = API_KEY
-        var points = ""
-
-        staticmapService.getRoutes("Lima","Callao","driving", key).enqueue(object :Callback<GoogleMapDirections>{
+        staticmapService.getRoutes(origin,destination,"driving", key).enqueue(object :Callback<GoogleMapDirections>{
             override fun onResponse(call: Call<GoogleMapDirections>, response: Response<GoogleMapDirections>) {
                 val googleMapDirection = response.body()
-                points = googleMapDirection!!.routes[0].overview_polyline.points
+                val points = googleMapDirection!!.routes[0].overview_polyline.points
                 Log.i("Entro", points)
 
                 Glide.with(applicationContext)
-                    .applyDefaultRequestOptions(requestOptions)
                     .load("https://maps.googleapis.com/maps/api/staticmap?size=$size&path=enc%3A$points&key=$key")
                     .into(iv_staticMap)
             }
             override fun onFailure(call: Call<GoogleMapDirections>, t: Throwable) {
                 Log.e("F", "LA ptmr")
                 Log.e("F", t.message.toString())
-
             }
         })
-
-        Glide.with(applicationContext)
-            .applyDefaultRequestOptions(requestOptions)
-            .load("https://maps.googleapis.com/maps/api/staticmap?size=$size&path=enc%3A$points&key=$key")
-            .into(iv_staticMap)
-
     }
 
     fun solicitarViaje()
     {
-
         val parada = Parada(latitud = 12.131231,longitud = 13.123213,ubicacion = "En algun lugar de un gran pais")
         var solicitd = SolicitudRequest(mensaje = et_dialog_solicitar_message.text.toString(),pasajeroId = prefs.getLong("idusuario",0L), viajeId = viajeid, puntoEncuentro = parada)
 
@@ -276,8 +254,8 @@ class ViajeDetail : AppCompatActivity() {
 
 
         Glide.with(applicationContext)
-            .applyDefaultRequestOptions(requestOptions)
             .load("https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=11&size=800x800&maptype=roadmap&key=AIzaSyBBqph0jQU_8qqrqypG35bQazc29sUanjo")
+            .thumbnail(Glide.with(this).load(R.drawable.loading))
             .into(staticMap)
 
         solicitarButton.setOnClickListener {
@@ -289,4 +267,5 @@ class ViajeDetail : AppCompatActivity() {
             solicitarViaje()
         }
     }
+
 }

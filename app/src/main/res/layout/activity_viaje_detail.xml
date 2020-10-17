@@ -153,22 +153,25 @@
                             app:srcCompat="@drawable/left" />
 
                         <LinearLayout
-                            android:layout_width="230dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginRight="30dp"
                                 android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/viajedetail_origen"
-                                    android:layout_width="135dp"
+                                    android:layout_width="160dp"
                                     android:layout_height="wrap_content"
                                     android:text="Carabayllo"
-                                    android:textColor="#454F63" />
+                                    android:textColor="#454F63"
+                                    android:minHeight="30dip"
+                                    android:maxHeight="70dip"
+                                    android:minLines="1"/>
 
                                 <TextView
                                     android:id="@+id/viajedetail_hora_origen"
@@ -183,22 +186,25 @@
                                 android:id="@+id/imageViewdetail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="20dp"
                                 app:srcCompat="@drawable/divider" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="30dp"
                                 android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/viajedetail_destino"
-                                    android:layout_width="134dp"
+                                    android:layout_width="160dp"
                                     android:layout_height="wrap_content"
                                     android:text="UPC San Miguel"
-                                    android:textColor="#454F63" />
+                                    android:textColor="#454F63"
+                                    android:minHeight="30dip"
+                                    android:maxHeight="70dip"
+                                    android:minLines="1"/>
 
                                 <TextView
                                     android:id="@+id/viajedetail_hora_destino"
@@ -304,7 +310,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:src="@android:color/white">
     </ImageView>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
