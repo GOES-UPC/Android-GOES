@@ -3,40 +3,38 @@ package com.simplife.skip.activities
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
 import android.content.SharedPreferences
-import android.media.Image
-import com.simplife.skip.*
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
+import android.view.InflateException
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.PolyUtil
+import com.simplife.skip.R
 import com.simplife.skip.adapter.ResenasRecyclerAdapter
-import com.simplife.skip.adapter.ViajeRecyclerAdapter
 import com.simplife.skip.interfaces.*
 import com.simplife.skip.models.*
 import com.simplife.skip.util.API_KEY
-import com.simplife.skip.util.Resenas_Data
 import com.simplife.skip.util.URL_API
 import com.simplife.skip.util.URL_API_GOOGLE_MAPS
 import kotlinx.android.synthetic.main.activity_viaje_detail.*
-import kotlinx.android.synthetic.main.dialog_solicitar.*
-import kotlinx.android.synthetic.main.viaje_list_item.view.*
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,8 +56,9 @@ class ViajeDetail : AppCompatActivity() {
     private lateinit var btn_solicitar : Button
     private lateinit var iv_staticMap : ImageView
 
-      var viajeid = 0L
+    var viajeid = 0L
 
+    private lateinit var viajePublicado :ViajeInicio
 
     private lateinit var prefs : SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
@@ -71,17 +70,15 @@ class ViajeDetail : AppCompatActivity() {
 
     private lateinit var requestOptions: RequestOptions
 
-    @SuppressLint("MissingPermission")
-    private val mapCallback = OnMapReadyCallback{ googleMap ->
-        googleMap.isMyLocationEnabled = true
-        googleMap.uiSettings.isMyLocationButtonEnabled = true
-        googleMap.uiSettings.isMapToolbarEnabled = true
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
 
-        val Lima = LatLng(-12.0554671, -77.0431111)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Lima, 11.0f))
+    private lateinit var mylocation: LatLng
 
-    }
+    private  var marker : Marker? = null
 
+    private var viewDialog : View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +100,8 @@ class ViajeDetail : AppCompatActivity() {
 
         Glide.with(applicationContext)
             .applyDefaultRequestOptions(requestOptions)
-            .load(android.R.color.white)
+            .asGif()
+            .load(R.drawable.loading)
             .into(iv_staticMap)
 
         val retrofit: Retrofit = Retrofit.Builder()
@@ -122,13 +120,10 @@ class ViajeDetail : AppCompatActivity() {
         reportService = retrofit.create(ReportApiService::class.java)
         staticmapService = retrofitStaticMap.create(StaticMapApiService::class.java)
 
-
-
-
         viajeService.getHomeViajesPorId(viajeid).enqueue(object : Callback<ViajeInicio> {
             override fun onResponse(call: Call<ViajeInicio>?, response: Response<ViajeInicio>?) {
                 val viaje = response?.body()
-
+                viajePublicado = viaje!!
                 viajedetail_author.setText(viaje?.nombres)
                 viajedetail_title.setText(viaje?.fechaPublicacion)
                 viajedetail_text.setText(viaje?.descripcion)
@@ -151,8 +146,6 @@ class ViajeDetail : AppCompatActivity() {
             }
         })
 
-
-
         //Lista de Resenas
         recyclerView = findViewById(R.id.recycler_resenas_view)
         recyclerView.layoutManager = LinearLayoutManager(applicationContext)
@@ -170,8 +163,6 @@ class ViajeDetail : AppCompatActivity() {
         }
 
 
-        /*mapFragment = supportFragmentManager.findFragmentById(R.id.mapViajeDetail) as SupportMapFragment
-        mapFragment?.getMapAsync(mapCallback)*/
 
     }
 
@@ -193,22 +184,18 @@ class ViajeDetail : AppCompatActivity() {
         })
     }
 
-
-
-
-
     fun cargarStaticMapRoute(origen:Parada, destino:Parada)
     {
         var origin = "${origen.latitud},${origen.longitud}"
         var destination = "${destino.latitud},${destino.longitud}"
-        var size= "800x800"
+        var size= "1000x1000"
         var key = API_KEY
 
         staticmapService.getRoutes(origin,destination,"driving", key).enqueue(object :Callback<GoogleMapDirections>{
             override fun onResponse(call: Call<GoogleMapDirections>, response: Response<GoogleMapDirections>) {
                 val googleMapDirection = response.body()
                 val points = googleMapDirection!!.routes[0].overview_polyline.points
-                Log.i("Entro", points)
+                Log.i("Entro", "https://maps.googleapis.com/maps/api/staticmap?size=$size&path=enc%3A$points&key=$key")
 
                 Glide.with(applicationContext)
                     .load("https://maps.googleapis.com/maps/api/staticmap?size=$size&path=enc%3A$points&key=$key")
@@ -221,16 +208,17 @@ class ViajeDetail : AppCompatActivity() {
         })
     }
 
-    fun solicitarViaje()
+    fun solicitarViaje(mensaje: String)
     {
-        val parada = Parada(latitud = 12.131231,longitud = 13.123213,ubicacion = "En algun lugar de un gran pais")
+        val parada = Parada(latitud = marker!!.position.latitude,longitud = marker!!.position.longitude, ubicacion = mensaje)
         var solicitd = SolicitudRequest(mensaje = et_dialog_solicitar_message.text.toString(),pasajeroId = prefs.getLong("idusuario",0L), viajeId = viajeid, puntoEncuentro = parada)
 
         solicitudService.solicitarViaje(solicitd).enqueue(object : Callback<Solicitud> {
             override fun onResponse(call: Call<Solicitud>?, response: Response<Solicitud>?) {
                 val soli = response!!.body()
-                if(soli == null){
+                if(soli!!.id == 0L){
                     Toast.makeText(this@ViajeDetail, "No se puede solicitar un viaje propio", Toast.LENGTH_SHORT).show()
+                    return
                 }
                 Log.i("Solicitud",soli.toString())
                 dialog.dismiss()
@@ -242,36 +230,69 @@ class ViajeDetail : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("MissingPermission")
+    private val mapCallback = OnMapReadyCallback{ googleMap ->
+        googleMap.isMyLocationEnabled = true
+        googleMap.uiSettings.isMyLocationButtonEnabled = true
+        googleMap.uiSettings.isMapToolbarEnabled = true
+
+        val Lima = LatLng(-12.0554671, -77.0431111)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Lima, 11.0f))
+
+        googleMap.setOnMapClickListener {
+            if(marker == null)
+            {
+                marker = googleMap.addMarker(MarkerOptions().position(it).draggable(true))
+            }
+            else
+            {
+                marker!!.remove()
+                marker = null
+                marker = googleMap.addMarker(MarkerOptions().position(it).draggable(true))
+            }
+        }
+        val latOrigen = LatLng(viajePublicado.paradas[0].latitud,viajePublicado.paradas[0].longitud)
+        val latDestino = LatLng(viajePublicado.paradas[1].latitud,viajePublicado.paradas[1].longitud)
+        googleMap.addMarker(MarkerOptions().position(latOrigen).title("Origen").draggable(false))
+        googleMap.addMarker(MarkerOptions().position(latDestino).title("Destino").draggable(false))
+        dibujarRuta(latOrigen,latDestino,googleMap)
+        val builder = LatLngBounds.Builder()
+        builder.include(latOrigen).include(latDestino)
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),0))
+    }
+
     fun dialogSolicitar()
     {
-        val requestOptions = RequestOptions()
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
+
 
         //https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&key=YOUR_API_KEY
         val builer = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val view  = inflater.inflate(R.layout.dialog_solicitar,null)
-        builer.setView(view)
+        if (viewDialog != null)
+        {
+            val parent = viewDialog!!.parent as ViewGroup
+            if (parent != null)
+            {
+                parent.removeView(viewDialog)
+            }
+        }
+        try {
+            viewDialog  = layoutInflater.inflate(R.layout.dialog_solicitar,null)
+        }catch (e:InflateException) {
 
+        }
+
+
+        builer.setView(viewDialog)
         dialog =  builer.create()
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
 
-        val staticMap = view.findViewById(R.id.iv_dialog_map) as ImageView
-        val solicitarButton = view.findViewById(R.id.btn_dialog_solicitar) as Button
-        et_dialog_solicitar_message = view.findViewById(R.id.et_solicitar_mensaje)
-        var center = ""
-        var zoom = ""
-        var size = ""
-
-        val url = "$URL_API_GOOGLE_MAPS/staticmap?"
 
 
-        Glide.with(applicationContext)
-            .load("https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=11&size=800x800&maptype=roadmap&key=AIzaSyBBqph0jQU_8qqrqypG35bQazc29sUanjo")
-            .thumbnail(Glide.with(this).load(R.drawable.loading))
-            .into(staticMap)
+        val fragmentMap = supportFragmentManager.findFragmentById(R.id.fr_dialog_map) as SupportMapFragment
+        val solicitarButton = viewDialog!!.findViewById(R.id.btn_dialog_solicitar) as Button
+        et_dialog_solicitar_message = viewDialog!!.findViewById(R.id.et_solicitar_mensaje)
+        fragmentMap.getMapAsync(mapCallback)
 
         solicitarButton.setOnClickListener {
             if (et_dialog_solicitar_message.text.isNullOrEmpty())
@@ -279,8 +300,63 @@ class ViajeDetail : AppCompatActivity() {
                 Toast.makeText(this,"Complete los campos",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            solicitarViaje()
+            if (marker == null)
+            {
+                Toast.makeText(this,"Elija una parada",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            solicitarViaje(et_dialog_solicitar_message.text.toString())
         }
     }
+
+    private fun dibujarRuta(origen:LatLng,destino:LatLng,googleMap: GoogleMap)
+    {
+        val origen_lat = origen.latitude
+        val origen_lng = origen.longitude
+        val destino_lat = destino.latitude
+        val destino_lng = destino.longitude
+
+        staticmapService.getRoutes("$origen_lat,$origen_lng","$destino_lat,$destino_lng","driving", API_KEY).enqueue(object :Callback<GoogleMapDirections>{
+            override fun onResponse(call: Call<GoogleMapDirections>, response: Response<GoogleMapDirections>) {
+                val googleMapDirection = response.body()
+                val points = googleMapDirection!!.routes[0].overview_polyline.points
+                Log.i("Entro", points)
+                googleMap.addPolyline(PolylineOptions().addAll(PolyUtil.decode(points)).width(7f).color(Color.RED))
+            }
+            override fun onFailure(call: Call<GoogleMapDirections>, t: Throwable) {
+                Log.e("F", t.message.toString())
+
+            }
+        })
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private fun traerUbicacion() {
+
+        locationRequest = LocationRequest.create()
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        locationRequest.setInterval(20 * 1000)
+        locationCallback = object : LocationCallback() {
+
+            override fun onLocationResult(locationResult: LocationResult?) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (location in locationResult.getLocations()) {
+                    if (location != null) {
+                        mylocation = LatLng(location.latitude, location.longitude)
+                    }
+                }
+                super.onLocationResult(locationResult)
+            }
+        }
+        mFusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+
 
 }

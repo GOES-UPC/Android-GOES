@@ -100,7 +100,7 @@ class HomeFragment : Fragment() {
 
         addBtn.setOnClickListener{
             val i = Intent(context, Post::class.java)
-            activity!!.startActivityForResult(i,1)
+            startActivityForResult(i,111)
             //context?.startActivity(Intent(context, Post::class.java))
         }
 
@@ -141,7 +141,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 1)
+        if (requestCode == 111)
         {
             addDataSet()
         }
