@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/iniciar_viaje_validacion"
         android:layout_gravity="center"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:layout_marginVertical="12dp"/>
 
