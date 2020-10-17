@@ -5,10 +5,7 @@ import com.simplife.skip.models.SolicitudRequest
 import com.simplife.skip.models.Viaje
 import com.simplife.skip.models.ViajeRequest
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface SolicitudApiService {
 
@@ -21,5 +18,10 @@ interface SolicitudApiService {
 
     @POST("api/auth/skip/solicitudes")
     fun solicitarViaje(@Body solicitudRequest: SolicitudRequest): Call<Solicitud>
+
+    @PUT("api/auth/skip/solicitudes")
+    fun actualizarEstadoPasajero(@Query("viajeId") viajeId: Long,
+                                 @Query("pasajeroId") pasajeroId: Long,
+                                 @Query("estado") estado: String): Call<Int>
 
 }

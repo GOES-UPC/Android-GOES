@@ -13,4 +13,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_googlemap">Map</string>
+
+    <string name="iniciar_viaje_validacion">¿Está seguro de que quiere iniciar el viaje?</string>
+    <string name="finalizar_viaje_validacion">¿Está seguro de que quiere finalizar el viaje?</string>
+    <string name="finalizar_viaje_detalle">Está afirmando que todos los pasajeros han llegado a su destino</string>
 </resources>

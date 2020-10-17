@@ -1,9 +1,11 @@
 package com.simplife.skip.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.simplife.skip.R
 import com.simplife.skip.activities.StartViajeActivity
@@ -52,10 +54,19 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
             miviajeDestiny.setText(viaje.paradas.get(1).ubicacion)
             miviajeHoraDestino.setText(viaje.horaFin)
             miviajeHoraOrigen.setText(viaje.horaInicio)
+            Log.i("Viaje: ", viaje.estadoViaje)
 
             itemView.setOnClickListener{
-                itemView.context.startActivity(Intent(itemView.context, StartViajeActivity::class.java).putExtra("via", viaje))
+                if(viaje.estadoViaje != "FINALIZADO"){
+                    itemView.context.startActivity(Intent(itemView.context, StartViajeActivity::class.java).putExtra("via", viaje))
+                }
+                else{
+                    Toast.makeText(itemView.context, "El viaje ha finalizado", Toast.LENGTH_SHORT).show()
+
             }
+            }
+
+
 
         }
 

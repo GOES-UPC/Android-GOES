@@ -115,6 +115,7 @@
             android:layout_marginVertical="10dp"
             android:src="@drawable/divider_pasajeros" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_pasajeros_a_recoger"
             android:layout_width="match_parent"

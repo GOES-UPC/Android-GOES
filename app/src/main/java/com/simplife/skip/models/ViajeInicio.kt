@@ -10,7 +10,9 @@ data class ViajeInicio(
     var descripcion: String,
     var paradas: List<Parada>,
     var horaInicio: String,
-    var horaFin: String
+    var horaFin: String,
+    var estadoViaje: String
 ): Serializable{
-
+    constructor(): this(0L, "", "","","", ArrayList<Parada>(),
+                        "","","" )
 }

@@ -3,6 +3,7 @@ package com.simplife.skip.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.service.autofill.UserData
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +19,6 @@ import kotlinx.android.synthetic.main.activity_viaje_detail.*
 
 class StartViajeActivity : AppCompatActivity() {
 
-    private  lateinit var pasajeroAdapter: PasajerosRecyclerAdapter
-    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,24 +26,25 @@ class StartViajeActivity : AppCompatActivity() {
 
         val viaje = intent.getSerializableExtra("via") as ViajeInicio
         val passengerList = PassengerListFragment()
-        var bundle = Bundle()
-        bundle.putLong("viajeId", viaje.id)
-        passengerList.arguments = bundle
-        loadFragment(passengerList)
+        val enViajeFragment = EnViajeFragment()
+        val bundle = Bundle()
+        bundle.putSerializable("viaje", viaje)
+        when(viaje.estadoViaje){
+            "PUBLICADO" -> {
+                passengerList.arguments = bundle
+                loadFragment(passengerList)
+            }
+            "EN CURSO" -> {
+                enViajeFragment.arguments = bundle
+                loadFragment(enViajeFragment)
+            }
+        }
 
+        val backButton = findViewById<ImageButton>(R.id.viajeback_button)
+        backButton.setOnClickListener{
+            finish()
+        }
 
-
-        /*startviaje_origen.setText(viaje.conductor.ubicacion)
-        startviaje_horaorigen.setText(viaje.horaInicio)
-        startviaje_destino.setText(viaje.conductor.sede)
-        startviaje_horadestino.setText(viaje.horaLlegada)*/
-
-       /* recyclerView = findViewById(R.id.recycler_pasajeros)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        //val topSpacingDecoration = TopSpacingItemDecoration(30)
-        //recyclerView.addItemDecoration(topSpacingDecoration)
-        pasajeroAdapter = PasajerosRecyclerAdapter()
-        recyclerView.adapter = pasajeroAdapter*/
 
     }
 
@@ -53,5 +53,10 @@ class StartViajeActivity : AppCompatActivity() {
                 fragmentTransaction -> fragmentTransaction.replace(R.id.fragment_container_en_viaje, fragment)
             fragmentTransaction.commit()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

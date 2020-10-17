@@ -18,14 +18,14 @@
 
         <LinearLayout
             android:id="@+id/container1"
-            android:layout_width="262dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
                 android:id="@+id/pasajero_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mitch Tabian"
                 android:textColor="#FFFF"
@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/pasajero_punto_encuentro"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Av. Izaguirre"
                 android:textColor="#E3E3E3"
