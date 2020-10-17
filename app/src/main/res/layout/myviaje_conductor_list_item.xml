@@ -61,24 +61,27 @@
                     app:srcCompat="@drawable/left" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="66dp"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="60dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/miviajecond_origen"
-                            android:layout_width="120dp"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:textColor="#454F63"
                             android:minHeight="30dip"
                             android:maxHeight="80dip"
                             android:minLines="1"
-                            android:text="Carabayllo" />
+                            android:text="Carabayllo"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginLeft="10dp"/>
 
                         <TextView
                             android:id="@+id/miviajecond_horaorigen"
@@ -91,7 +94,7 @@
 
                     <ImageView
                         android:id="@+id/miviaje_divider"
-                        android:layout_width="180dp"
+                        android:layout_width="240dp"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/divider" />
 
@@ -103,10 +106,12 @@
 
                         <TextView
                             android:id="@+id/miviajecond_destino"
-                            android:layout_width="120dp"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:textColor="#454F63"
                             android:text="UPC San Miguel"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginLeft="10dp"
                             android:minHeight="30dip"
                             android:maxHeight="80dip"
                             android:minLines="1"

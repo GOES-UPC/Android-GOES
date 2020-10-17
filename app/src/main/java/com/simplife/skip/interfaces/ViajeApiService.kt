@@ -18,6 +18,10 @@ interface ViajeApiService {
     @GET("api/auth/skip/viajes/inicio")
     fun getHomeViajes(): Call<List<ViajeInicio>>
 
+    @GET("api/auth/skip/viajes/inicio/{id}")
+    fun getHomeViajesPorId(@Path("id") id: Long): Call<ViajeInicio>
+
+
     @GET("api/auth/skip/viajes/{id}")
     fun getViajeById(@Path("id") id: Long): Call<Viaje>
 

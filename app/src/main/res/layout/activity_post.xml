@@ -47,20 +47,18 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="240dp"
                 android:layout_marginBottom="200dp"
                 android:gravity="end"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <Button
                     android:id="@+id/post_btn"
                     android:layout_width="103dp"
                     android:layout_height="30dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="30dp"
                     android:background="@drawable/mybutton"
                     android:text="Publicar"
                     android:textAllCaps="false"
@@ -78,10 +76,11 @@
                 tools:layout_editor_absoluteX="412dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginRight="140dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/post_image"
@@ -94,17 +93,19 @@
 
                     <LinearLayout
                         android:id="@+id/postcontainer1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="10dp">
-
                         <TextView
                             android:id="@+id/post_author"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mitch Tabian"
                             android:textColor="#454F63"
+                            android:minHeight="30dp"
+                            android:maxHeight="70dp"
+                            android:minLines="1"
                             android:textSize="15sp" />
 
 
@@ -131,13 +132,23 @@
                         android:textColor="#454F63"
                         android:textColorHint="#88787474"
                         android:textSize="13sp" />
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="15dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/ic_calendar"></ImageView>
                     <EditText
                         android:id="@+id/fechaProgrmada"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
+
                         android:layout_marginBottom="10dp"
                         android:hint="Fecha programa para el viaje"
                         android:inputType="none"
@@ -149,6 +160,7 @@
                         android:textColor="#454F63"
                         android:textColorHint="#88787474"
                         android:textSize="13sp" />
+                </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -162,14 +174,14 @@
                             app:srcCompat="@drawable/left" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="0dp"
                                 android:orientation="horizontal">
 
 
@@ -218,10 +230,10 @@
                                 android:background="@drawable/divider" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="0dp"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -229,8 +241,8 @@
                                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                                     android:layout_width="135dp"
                                     android:layout_height="wrap_content"
-                                    android:hint="Punto Destino"
-                                    android:padding="3dp"
+                                    android:hint="Seleccione un punto Destino"
+                                    android:padding="2dp"
                                     android:textSize="12.5dp"
                                     android:textColor="#454F63"
                                     android:textColorHint="#88787474"
@@ -258,7 +270,15 @@
                             </LinearLayout>
 
                         </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/img_btn_ida"
+                            android:layout_width="fill_parent"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="fill_parent"
+                            android:background="@drawable/ida"
+                            ></ImageButton>
                     </LinearLayout>
+
 
                 </LinearLayout>
 

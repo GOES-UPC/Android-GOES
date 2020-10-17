@@ -72,7 +72,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -91,7 +91,7 @@
                     <ImageView
                         android:id="@+id/leftimage"
                         android:layout_width="56dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         app:srcCompat="@drawable/left" />
 
                     <LinearLayout
@@ -101,7 +101,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginRight="30dp"
                             android:orientation="horizontal">
 
@@ -110,10 +110,12 @@
                                 android:layout_width="135dp"
                                 android:layout_height="wrap_content"
                                 android:text="Carabayllo"
+                                android:textColor="#454F63"
                                 android:minHeight="30dip"
-                                android:maxHeight="80dip"
+                                android:maxHeight="70dip"
                                 android:minLines="1"
-                                android:textColor="#454F63" />
+                                />
+
 
                             <TextView
                                 android:id="@+id/viaje_hora_origen"
@@ -142,10 +144,10 @@
                                 android:layout_width="134dp"
                                 android:layout_height="wrap_content"
                                 android:text="UPC San Miguel"
+                                android:textColor="#454F63"
                                 android:minHeight="30dip"
-                                android:maxHeight="80dip"
-                                android:minLines="1"
-                                android:textColor="#454F63" />
+                                android:maxHeight="70dip"
+                                android:minLines="1"/>
 
                             <TextView
                                 android:id="@+id/viaje_hora_destino"

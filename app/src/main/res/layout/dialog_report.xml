@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:backgroundTint="#00FFFFFF"
-    app:cardBackgroundColor="#FFFF"
+    android:backgroundTint="#FFFFFF"
+    app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="20dp">
 
     <TextView
@@ -21,7 +21,7 @@
 
 
     <EditText
-        android:id="@+id/et_solicitar_mensaje"
+        android:id="@+id/et_reportar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -33,26 +33,24 @@
         android:minHeight="30dip"
         android:minLines="1"></EditText>
 
-    <androidx.appcompat.widget.AppCompatRatingBar
+
+    <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rating_viaje"
-        android:numStars="5"
         android:layout_marginHorizontal="80dp"
         android:layout_marginTop="150dp"
-        android:isIndicator="true"
-        android:stepSize="0.5"
-        />
+        android:numStars="5"/>
 
     <Button
-        android:id="@+id/btn_dialog_solicitar"
+        android:id="@+id/btn_dialog_reportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="150dp"
         android:layout_marginTop="220dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/mybutton"
         android:padding="20dp"
-        android:layout_marginBottom="20dp"
         android:text="Guardar"
         android:textColor="#FFFF"></Button>
 
