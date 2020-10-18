@@ -71,7 +71,8 @@
                 android:ems="10"
                 android:hint="Nº Asientos"
                 android:inputType="number"
-                android:digits="123456789"
+                android:maxLength="2"
+                android:digits="1234567890"
                 android:textSize="14sp" />
         </androidx.cardview.widget.CardView>
 
@@ -97,8 +98,9 @@
                 android:layout_marginHorizontal="15dp"
                 android:ems="10"
                 android:hint="Años de uso"
+                android:maxLength="2"
                 android:inputType="number"
-                android:digits="123456789"
+                android:digits="1234567890"
                 android:textSize="14sp" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>

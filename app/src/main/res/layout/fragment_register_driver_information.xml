@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:ems="10"
+                android:maxLength="9"
                 android:hint="Nº Licencia"
                 android:inputType="text"
                 android:textSize="14sp" />
