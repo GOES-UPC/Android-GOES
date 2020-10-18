@@ -357,14 +357,16 @@ class Post : AppCompatActivity() {
         var fin  = Parada(destino.text.toString(), markerDestino!!.position.latitude,markerDestino!!.position.longitude)
 
         var viajeRequest : ViajeRequest
+        val horaOrigen = "${origen_hora.text}:00"
+        val horaDestino = "${destino_hora.text}:00"
         if(ida)
         {
              viajeRequest = ViajeRequest(usuarioid, true, inicio, fin, "2 horas",
-                distancia.toFloat() , description.text.toString(), fecha_viaje.text.toString(), origen_hora.text.toString(), destino_hora.text.toString())
+                distancia.toFloat() , description.text.toString(), fecha_viaje.text.toString(), horaOrigen, horaDestino)
         }
         else{
             viajeRequest = ViajeRequest(usuarioid, true, fin, inicio, "2 horas",
-                distancia.toFloat() , description.text.toString(), fecha_viaje.text.toString(), origen_hora.text.toString(), destino_hora.text.toString())
+                distancia.toFloat() , description.text.toString(), fecha_viaje.text.toString(), horaOrigen, horaDestino)
         }
 
         viajeService.publicarViaje(viajeRequest).enqueue(object : Callback<Viaje> {
@@ -421,7 +423,7 @@ class Post : AppCompatActivity() {
             if (m <10) minuto = "0$m"
             else minuto = m.toString()
 
-            origen_hora.setText("$hora:$minuto:00")
+            origen_hora.setText("$hora:$minuto")
         },mHora,mMin,true)
 
         timePicker.show()
@@ -444,7 +446,7 @@ class Post : AppCompatActivity() {
             if (m <10) minuto = "0$m"
             else minuto = m.toString()
 
-            destino_hora.setText("$hora:$minuto:00")
+            destino_hora.setText("$hora:$minuto")
         },mHora,mMin,true)
 
         timePicker.show()
