@@ -103,12 +103,12 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="66dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
@@ -117,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#454F63"
                             android:minHeight="30dip"
-                            android:maxHeight="80dip"
+                            android:maxHeight="90dip"
                             android:minLines="1"
 
                             android:text="Carabayllo" />

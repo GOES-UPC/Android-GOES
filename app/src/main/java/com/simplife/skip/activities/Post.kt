@@ -191,7 +191,7 @@ class Post : AppCompatActivity() {
         val arrayLatLng = arrayListOf(
             null,
             LatLng(-12.1040839, -76.9630173),
-            LatLng(-12.0874592, -77.0500584),
+            LatLng(-12.0874715,-77.0500334),
             LatLng(-12.076169,-77.0935428),
             LatLng(-12.1978174, -77.0086914)
         )

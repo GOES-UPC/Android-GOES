@@ -2,6 +2,7 @@ package com.simplife.skip.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -155,6 +156,13 @@ class ViajesFragment : Fragment() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 111)
+        {
+            addDataSet()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
     companion object {
         @JvmStatic
         fun newInstance() = ViajesFragment()
