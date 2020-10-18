@@ -37,15 +37,15 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class NotificacionFragment : Fragment() {
 
-    private  lateinit var solicitudesAdapter: SolicitudesRecyclerAdapter
-    private  lateinit var solicitudesPasajeroAdapter: SolicitudesPasajeroRecyclerAdapter
+    private lateinit var solicitudesAdapter: SolicitudesRecyclerAdapter
+    private lateinit var solicitudesPasajeroAdapter: SolicitudesPasajeroRecyclerAdapter
     private lateinit var recyclerView: RecyclerView
 
 
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
 
-    private lateinit var prefs : SharedPreferences
+    private lateinit var prefs: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
 
     private lateinit var solicitudService: SolicitudApiService
@@ -55,7 +55,7 @@ class NotificacionFragment : Fragment() {
     var rol = "pasajero"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("FragmentNotifcaciones","Creado")
+        Log.i("FragmentNotifcaciones", "Creado")
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
@@ -68,9 +68,9 @@ class NotificacionFragment : Fragment() {
 
 
         prefs = activity!!.getSharedPreferences("user", Context.MODE_PRIVATE)
-        edit= prefs.edit()
+        edit = prefs.edit()
         usuarioid = prefs.getLong("idusuario", 0)
-        rol = prefs.getString("rol","pasajero")!!
+        rol = prefs.getString("rol", "pasajero")!!
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(URL_API)
             .addConverterFactory(GsonConverterFactory.create())
@@ -82,24 +82,18 @@ class NotificacionFragment : Fragment() {
         recyclerView = vista.findViewById(R.id.recycler_notificaciones_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        if(rol == "ROL_CONDUCTOR")
-        {
+        if (rol == "ROL_CONDUCTOR") {
             getSolicitudesConductor()
-        }
-        else
-        {
+        } else {
             getSolicitudesPasajero()
         }
 
         swipeRefreshLayout = vista.findViewById(R.id.swipeRefreshLayoutNotifications)
 
         swipeRefreshLayout.setOnRefreshListener {
-            if(rol == "ROL_CONDUCTOR")
-            {
+            if (rol == "ROL_CONDUCTOR") {
                 getSolicitudesConductor()
-            }
-            else
-            {
+            } else {
                 getSolicitudesPasajero()
             }
         }
@@ -108,6 +102,15 @@ class NotificacionFragment : Fragment() {
         //solicitudesAdapter.submitList(data1)
 
         return vista
+    }
+
+    fun addDataset()
+    {
+        if (rol == "ROL_CONDUCTOR") {
+            getSolicitudesConductor()
+        } else {
+            getSolicitudesPasajero()
+        }
     }
 
     fun getSolicitudesPasajero()

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.simplife.skip.R
 import com.simplife.skip.activities.StartViajeActivity
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.myviaje_conductor_list_item.view.*
 class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items : List<ViajeInicio> = ArrayList()
-    private lateinit var context : Activity
+    private lateinit var context : Fragment
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MiViajeViewHolder(
@@ -41,11 +42,11 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    fun submitContext(context: Activity){
+    fun submitContext(context: Fragment){
         this.context = context
     }
 
-    fun getContext():Activity{
+    fun getContext():Fragment{
         return this.context
     }
 
@@ -69,7 +70,7 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
             Log.i("Viaje: ", viaje.estadoViaje)
             itemView.setOnClickListener{
                 if(viaje.estadoViaje != "FINALIZADO"){
-                     itemView.context.startActivity(Intent(itemView.context, StartViajeActivity::class.java).putExtra("via", viaje))
+                     getContext().startActivityForResult(Intent(itemView.context, StartViajeActivity::class.java).putExtra("via", viaje),222)
                 }
                 else{
                     Toast.makeText(itemView.context, "El viaje ha finalizado", Toast.LENGTH_SHORT).show()

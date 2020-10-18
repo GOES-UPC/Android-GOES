@@ -1,6 +1,7 @@
 package com.simplife.skip.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -36,7 +37,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mPagerViewAdapter: PagerViewAdapter
 
 
-    private lateinit var fragmentList : MutableList<Fragment>
+     lateinit var fragmentList : MutableList<Fragment>
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,11 +53,11 @@ class MainActivity : AppCompatActivity() {
         val usuarioid = prefs.getLong("idusuario",0)
 
         fragmentList = arrayListOf()
-        fragmentList.add(HomeFragment.newInstance())
-        fragmentList.add(SearchFragment.newInstance())
-        fragmentList.add(ViajesFragment.newInstance())
-        fragmentList.add(NotificacionFragment.newInstance())
-        fragmentList.add(PerfilFragment.newInstance())
+        fragmentList.add(HomeFragment.newInstance())//0
+        fragmentList.add(SearchFragment.newInstance())//1
+        fragmentList.add(ViajesFragment.newInstance())//2
+        fragmentList.add(NotificacionFragment.newInstance())//3
+        fragmentList.add(PerfilFragment.newInstance())//4
 
         mViewPager = findViewById(R.id.viewPager)
 
@@ -189,6 +191,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when(requestCode) {
+            111 -> (fragmentList.get(1) as ViajesFragment).addDataSet()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
 
 }

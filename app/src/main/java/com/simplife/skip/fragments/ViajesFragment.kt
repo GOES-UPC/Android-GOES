@@ -108,7 +108,7 @@ class ViajesFragment : Fragment() {
         return vista
     }
 
-    private fun addDataSet(){
+     fun addDataSet(){
         if(rol == "ROL_CONDUCTOR"){
             viajeService.getViajesDeConductor(usuarioid).enqueue(object :Callback<List<ViajeInicio>>{
                 override fun onResponse(call: Call<List<ViajeInicio>>, response: Response<List<ViajeInicio>>) {
@@ -118,7 +118,7 @@ class ViajesFragment : Fragment() {
                     {
                             misviajesAdapterConductor = MisViajeCondRecyclerAdapter()
                             recyclerView.adapter = misviajesAdapterConductor
-                            misviajesAdapterConductor.submitContext(activity!!)
+                            misviajesAdapterConductor.submitContext(this@ViajesFragment)
                             misviajesAdapterConductor.submitList(viajes)
                             Log.i("Viajes","Es conductor")
 
@@ -157,13 +157,19 @@ class ViajesFragment : Fragment() {
         }
     }
 
+
+    interface Actualizar {
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 111 || requestCode == 222)
+        if (requestCode == 111 || requestCode == 333)
         {
             addDataSet()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = ViajesFragment()

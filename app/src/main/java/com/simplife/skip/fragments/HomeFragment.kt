@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.simplife.skip.R
+import com.simplife.skip.activities.MainActivity
 import com.simplife.skip.activities.Post
 import com.simplife.skip.activities.ViajeDetail
 import com.simplife.skip.adapter.ViajeRecyclerAdapter
@@ -35,6 +36,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.ClassCastException
 import javax.sql.DataSource
 
 /**
@@ -124,6 +126,7 @@ class HomeFragment : Fragment() {
 
                 viajeAdapter = ViajeRecyclerAdapter()
                 recyclerView.adapter = viajeAdapter
+                viajeAdapter.submitContext(this@HomeFragment)
                 viajeAdapter.submitList(viajesaux)
                 swipeRefreshLayout.isRefreshing = false
             }
@@ -144,8 +147,33 @@ class HomeFragment : Fragment() {
         if (requestCode == 111)
         {
             addDataSet()
+            val act = activity as MainActivity
+            (act.fragmentList[2] as ViajesFragment).addDataSet()
         }
+        if (requestCode == 333)
+        {
+            val act = activity as MainActivity
+            (act.fragmentList[2] as ViajesFragment).addDataSet()
+            (act.fragmentList[3] as NotificacionFragment).addDataset()
+        }
+
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    interface Respuesta{
+        fun callback()
+    }
+
+     lateinit var  call : Respuesta
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try{
+            call = context as Respuesta
+        }catch ( e: ClassCastException)
+        {
+
+        }
     }
 
 }

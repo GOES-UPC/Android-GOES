@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.viaje_list_item.view.*
 class ViajeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private var items : List<ViajeInicio> = ArrayList()
+    private lateinit var context : Fragment
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViajeViewHolder(
@@ -40,7 +42,15 @@ class ViajeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         items = viajeList
     }
 
-    class ViajeViewHolder constructor(
+    fun submitContext(context: Fragment){
+        this.context = context
+    }
+
+    fun getContext(): Fragment{
+        return this.context
+    }
+
+    inner class ViajeViewHolder constructor(
         itemView: View
     ): RecyclerView.ViewHolder(itemView){
 
@@ -72,7 +82,7 @@ class ViajeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                 .into(userImage)
 
             itemView.setOnClickListener{
-                itemView.context.startActivity(Intent(itemView.context, ViajeDetail::class.java).putExtra("via", viaje.id))
+                getContext().startActivityForResult(Intent(itemView.context, ViajeDetail::class.java).putExtra("via", viaje.id),333)
             }
         }
     }
