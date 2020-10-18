@@ -94,6 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:ems="10"
+                android:maxLength="9"
+                android:digits="1234567890"
                 android:hint="Nº Celular"
                 android:inputType="text"
                 android:textSize="14sp" />
