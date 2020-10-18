@@ -31,8 +31,8 @@ class SolicitudesPasajeroRecyclerAdapter : RecyclerView.Adapter<RecyclerView.Vie
             }
         }
     }
-    fun submitList(resenaList: List<Solicitud>){
-        items = resenaList
+    fun submitList(solicitudList: List<Solicitud>){
+        items = solicitudList
     }
 
     class ResenaViewHolder constructor(

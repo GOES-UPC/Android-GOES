@@ -14,7 +14,7 @@ class Solicitud (
     var estadoTabla: Boolean
 ):Serializable{
     override fun toString(): String {
-        return "Solicitud(id=$id, mensaje='$mensaje', fechaSolicitud='$fechaSolicitud', horaSolicitud='$horaSolicitud', pasajero=$pasajero, viaje=$viaje, estadoPasajero='$estadoPasajero', parada=$parada, estadoTabla=$estadoTabla)"
+        return "Solicitud(id=$id, mensaje='$mensaje', fechaSolicitud='$fechaSolicitud', horaSolicitud='$horaSolicitud', pasajero=$pasajero, viaje=$viaje, estadoPasajero='$estadoPasajero', parada=$parada, estadoTabla=$estadoTabla)\n"
     }
 
 }

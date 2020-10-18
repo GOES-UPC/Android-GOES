@@ -191,6 +191,7 @@ class ViajeDetail : AppCompatActivity() {
         var size= "1000x1000"
         var key = API_KEY
 
+        Log.i("Direcctions", "https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&mode=driving&key=$API_KEY")
         staticmapService.getRoutes(origin,destination,"driving", key).enqueue(object :Callback<GoogleMapDirections>{
             override fun onResponse(call: Call<GoogleMapDirections>, response: Response<GoogleMapDirections>) {
                 val googleMapDirection = response.body()

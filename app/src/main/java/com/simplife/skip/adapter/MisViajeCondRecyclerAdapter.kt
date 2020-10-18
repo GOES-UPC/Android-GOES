@@ -1,11 +1,15 @@
 package com.simplife.skip.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.simplife.skip.R
 import com.simplife.skip.activities.StartViajeActivity
@@ -17,6 +21,7 @@ import kotlinx.android.synthetic.main.myviaje_conductor_list_item.view.*
 class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items : List<ViajeInicio> = ArrayList()
+    private lateinit var context : Activity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MiViajeViewHolder(
@@ -36,14 +41,21 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    fun submitContext(context: Activity){
+        this.context = context
+    }
+
+    fun getContext():Activity{
+        return this.context
+    }
+
     fun submitList(viajeList: List<ViajeInicio>){
         items = viajeList
     }
 
-    class MiViajeViewHolder constructor(
-        itemView: View
-    ): RecyclerView.ViewHolder(itemView){
+    inner class MiViajeViewHolder constructor(itemView: View): RecyclerView.ViewHolder(itemView){
        //TODO: HAY QUE ACTUALIZAR
+
         val miviajeSource = itemView.miviajecond_origen
         val miviajeDestiny = itemView.miviajecond_destino
         val miviajeHoraOrigen = itemView.miviajecond_horaorigen
@@ -55,21 +67,19 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
             miviajeHoraDestino.setText(viaje.horaFin)
             miviajeHoraOrigen.setText(viaje.horaInicio)
             Log.i("Viaje: ", viaje.estadoViaje)
-
             itemView.setOnClickListener{
                 if(viaje.estadoViaje != "FINALIZADO"){
-                    itemView.context.startActivity(Intent(itemView.context, StartViajeActivity::class.java).putExtra("via", viaje))
+                     itemView.context.startActivity(Intent(itemView.context, StartViajeActivity::class.java).putExtra("via", viaje))
                 }
                 else{
                     Toast.makeText(itemView.context, "El viaje ha finalizado", Toast.LENGTH_SHORT).show()
-
+                }
             }
-            }
-
-
-
         }
+    }
 
+    interface RowClickListener{
+        fun OnItemClickListener(viaje: ViajeInicio)
     }
 
 

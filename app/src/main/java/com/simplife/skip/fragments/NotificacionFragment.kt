@@ -100,7 +100,6 @@ class NotificacionFragment : Fragment() {
             }
             else
             {
-
                 getSolicitudesPasajero()
             }
         }

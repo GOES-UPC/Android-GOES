@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.simplife.skip.R
+import com.simplife.skip.activities.StartViajeActivity
 import com.simplife.skip.adapter.MisViajeCondRecyclerAdapter
 import com.simplife.skip.adapter.MisViajesRecyclerAdapter
 import com.simplife.skip.adapter.ViajeRecyclerAdapter
@@ -117,6 +118,7 @@ class ViajesFragment : Fragment() {
                     {
                             misviajesAdapterConductor = MisViajeCondRecyclerAdapter()
                             recyclerView.adapter = misviajesAdapterConductor
+                            misviajesAdapterConductor.submitContext(activity!!)
                             misviajesAdapterConductor.submitList(viajes)
                             Log.i("Viajes","Es conductor")
 
@@ -153,11 +155,10 @@ class ViajesFragment : Fragment() {
                 }
             })
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 111)
+        if (requestCode == 111 || requestCode == 222)
         {
             addDataSet()
         }

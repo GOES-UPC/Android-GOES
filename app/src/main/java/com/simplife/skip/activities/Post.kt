@@ -231,9 +231,7 @@ class Post : AppCompatActivity() {
                         markerOrigen!!.remove(); markerOrigen = null
                     }; return
                 } else {
-                    if (position == 5) {
-                        return
-                    }
+
                     mapFragment.getMapAsync { googleMap ->
                         if (markerOrigen == null) {
                             markerOrigen = googleMap.addMarker(
@@ -355,7 +353,7 @@ class Post : AppCompatActivity() {
         val distancia: Int = 20000
 
 
-        var inicio  = Parada("UPC "+ origenSpinner.selectedItem.toString(), markerOrigen!!.position.latitude, markerDestino!!.position.longitude)
+        var inicio  = Parada("UPC "+ origenSpinner.selectedItem.toString(), markerOrigen!!.position.latitude, markerOrigen!!.position.longitude)
         var fin  = Parada(destino.text.toString(), markerDestino!!.position.latitude,markerDestino!!.position.longitude)
 
         var viajeRequest : ViajeRequest

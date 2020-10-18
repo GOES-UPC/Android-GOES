@@ -133,13 +133,11 @@ class EnViajeFragment : Fragment() {
     fun actualizarPasajerosEnDestino(viajeId: Long){
         solicitudService.pasajerosEnDestino(viajeId).enqueue(object: Callback<Int>{
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
-                if(response.isSuccessful){
                     if(response.body()!! >= 1){
                         Toast.makeText(requireContext(), "El viaje ha finalizado. Todos han llegado a su destino", Toast.LENGTH_SHORT).show()
                         Log.i("En destino", "Pasajeros en destino")
                         requireActivity().finish()
                     }
-                }
             }
 
             override fun onFailure(call: Call<Int>, t: Throwable) {
