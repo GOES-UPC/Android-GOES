@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:ems="10"
+                    android:maxLength="10"
                     android:hint="Codigo UPC"
                     android:inputType="text"
                     android:textSize="14sp" />
@@ -87,6 +88,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:ems="10"
                     android:hint="Contraseña"
+                    android:maxLength="25"
                     android:inputType="textPassword"
                     android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
