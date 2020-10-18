@@ -9,23 +9,14 @@ import retrofit2.http.*
 
 interface ViajeApiService {
 
-    @GET("api/auth/skip/viajes")
-    fun getViajes(): Call<List<Viaje>>
-
     @GET("api/auth/skip/viajes/inicio")
     fun getHomeViajes(): Call<List<ViajeInicio>>
 
     @GET("api/auth/skip/viajes/inicio/{id}")
     fun getHomeViajesPorId(@Path("id") id: Long): Call<ViajeInicio>
 
-
-    @GET("api/auth/skip/viajes/{id}")
-    fun getViajeById(@Path("id") id: Long): Call<Viaje>
-
-
     @POST("api/auth/skip/viajes/publicacion")
     fun publicarViaje(@Body viajeRequest: ViajeRequest): Call<Viaje>
-
 
     @GET("api/auth/skip/viajes/conductor/{conductorid}")
     fun getViajesDeConductor(@Path("conductorid") conductorid: Long): Call<List<ViajeInicio>>
