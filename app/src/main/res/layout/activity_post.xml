@@ -179,23 +179,9 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:layout_marginRight="0dp"
                                 android:orientation="horizontal">
-
-
-                                <!--<EditText
-                                    android:id="@+id/post_origen"
-                                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                    android:layout_width="135dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="8dp"
-                                    android:hint="Punto Partida"
-                                    android:padding="4dp"
-                                    android:textColor="#454F63"
-                                    android:textColorHint="#88787474"
-                                    android:textSize="12.5sp" />-->
                                 <Spinner
                                     android:id="@+id/origen_spinner"
                                     android:layout_width="135dp"
@@ -206,16 +192,15 @@
                                 <EditText
                                     android:id="@+id/post_hora_origen"
                                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                    android:layout_width="115dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:hint="09:00:00 am"
+                                    android:hint="09:00 am"
                                     android:padding="7dp"
                                     android:textColor="#454F63"
                                     android:inputType="none"
                                     android:focusable="false"
                                     android:clickable="true"
                                     android:cursorVisible="false"
-
                                     android:longClickable="false"
                                     android:foreground="?android:attr/selectableItemBackground"
                                     android:textColorHint="#88787474"
@@ -224,16 +209,14 @@
 
                             <ImageView
                                 android:id="@+id/imageViewpost"
-                                android:layout_width="250dp"
+                                android:layout_width="230dp"
                                 android:layout_height="1dp"
-                                android:layout_marginRight="25dp"
                                 android:background="@drawable/divider" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginRight="0dp"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -254,9 +237,9 @@
                                 <EditText
                                     android:id="@+id/post_hora_destino"
                                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                    android:layout_width="115dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="fill_parent"
-                                    android:hint="11:00:00 am"
+                                    android:hint="11:00 am"
                                     android:inputType="none"
                                     android:focusable="false"
                                     android:clickable="true"
@@ -272,9 +255,9 @@
                         </LinearLayout>
                         <ImageButton
                             android:id="@+id/img_btn_ida"
-                            android:layout_width="fill_parent"
-                            android:layout_marginRight="10dp"
+                            android:layout_width="50dp"
                             android:layout_height="fill_parent"
+                            android:layout_marginHorizontal="5dp"
                             android:background="@drawable/ida"
                             ></ImageButton>
                     </LinearLayout>
