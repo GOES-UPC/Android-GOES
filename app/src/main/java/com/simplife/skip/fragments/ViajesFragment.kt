@@ -96,7 +96,7 @@ class ViajesFragment : Fragment() {
         }
         else
         {
-            misviajesAdapterPasajero = MisViajesRecyclerAdapter()
+            misviajesAdapterPasajero = MisViajesRecyclerAdapter(requireActivity())
             recyclerView.adapter = misviajesAdapterPasajero
         }
         addDataSet()
@@ -139,7 +139,7 @@ class ViajesFragment : Fragment() {
                     if(viajes!= null)
                     {
 
-                        misviajesAdapterPasajero = MisViajesRecyclerAdapter()
+                        misviajesAdapterPasajero = MisViajesRecyclerAdapter(requireActivity())
                         recyclerView.adapter = misviajesAdapterPasajero
                         misviajesAdapterPasajero.submitList(viajes)
                         Log.i("Viajes","Es pasajero")

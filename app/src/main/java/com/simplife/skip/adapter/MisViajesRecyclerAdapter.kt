@@ -1,5 +1,6 @@
 package com.simplife.skip.adapter
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -9,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.simplife.skip.R
+import com.simplife.skip.activities.MainActivity
 import com.simplife.skip.activities.ViajeDetail
 import com.simplife.skip.interfaces.ReportApiService
 import com.simplife.skip.interfaces.SolicitudApiService
@@ -26,7 +29,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MisViajesRecyclerAdapter(val launchActivity: Activity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items : List<ViajeInicio> = ArrayList()
 
@@ -52,7 +55,7 @@ class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         items = viajeList
     }
 
-    class MiViajeViewHolder constructor(
+    inner class MiViajeViewHolder constructor(
         itemView: View
     ): RecyclerView.ViewHolder(itemView){
         val miuserImage = itemView.miviaje_image
@@ -63,6 +66,7 @@ class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         val miviajeHoraOrigen = itemView.miviaje_horaorigen
         val miviajeHoraDestino = itemView.miviaje_horadestino
         val reportbutton = itemView.miviaje_commentBtn
+        val sharebutton = itemView.miviaje_shareBtn
 
         fun bind(viaje: ViajeInicio){
             miviajeTitle.setText(viaje.fechaPublicacion)
@@ -84,6 +88,11 @@ class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             reportbutton.setOnClickListener{
                 dialogCalificar(itemView, viaje)
             }
+
+            sharebutton.setOnClickListener{
+                compartirViaje(itemView, viaje.id, launchActivity)
+            }
+
         }
 
         fun calificar(dialog: AlertDialog, itemView: View,et_report: EditText, calificacion: Float, viajeId: Long)
@@ -157,7 +166,24 @@ class MisViajesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
                 calificar(dialog, itemView, et_dialog_report, calificacion, viaje.id)
             }
         }
+
+        fun compartirViaje(itemView: View, viajeId: Long, launchActivity: Activity){
+            val prefs = itemView.context.getSharedPreferences("user", Context.MODE_PRIVATE)
+            val nombreUsuario = prefs.getString("nombres", "Bryan")
+            val url = "https://www.goesapp.com/viajes?id=${viajeId}"
+            val type = "text/html"
+            ShareCompat.IntentBuilder
+                .from(launchActivity)
+                .setType(type)
+                .setSubject("Goes - Viaje compartido")
+                .setHtmlText("<b>$nombreUsuario cree que este viaje podría serte útil:</b> ${url}")
+                .setChooserTitle(R.string.share_text)
+                .startChooser()
+        }
     }
+
+
+
 
 
 }

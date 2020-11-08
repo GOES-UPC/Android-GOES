@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -78,6 +79,7 @@ class Post : AppCompatActivity() {
     private lateinit var locationCallback: LocationCallback
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private lateinit var geocoder: Geocoder
+    private lateinit var senseText: TextView
 
     private var markerOrigen: Marker? = null
     private var markerDestino: Marker? = null
@@ -206,7 +208,7 @@ class Post : AppCompatActivity() {
         destino_hora = findViewById(R.id.post_hora_destino)
         fecha_viaje = findViewById(R.id.fechaProgrmada)
         img_btn_ida = findViewById(R.id.img_btn_ida)
-
+        senseText = findViewById(R.id.sense_txt)
         post_author.setText(prefs.getString("nombres","Nombre")+" "+prefs.getString("apellidos",""))
 
         Glide.with(applicationContext)
@@ -279,15 +281,26 @@ class Post : AppCompatActivity() {
         img_btn_ida.setOnClickListener{
             if (ida)
             {
-                img_btn_ida.setBackgroundResource(R.drawable.vuelta)
+                senseText.text = "Vuelta"
+                animateImage()
             }
             else{
-                img_btn_ida.setBackgroundResource(R.drawable.ida)
+                senseText.text = "  Ida  "
+                animateImageback()
             }
             ida = !ida
         }
     }
 
+    private fun animateImage(){
+        val rotate = AnimationUtils.loadAnimation(this,R.anim.rotate_animation)
+        img_btn_ida.animation = rotate
+    }
+
+    private fun animateImageback(){
+        val rotate2 = AnimationUtils.loadAnimation(this,R.anim.rotate_animation_back)
+        img_btn_ida.animation = rotate2
+    }
 
     private fun dibujarRuta(origen:LatLng,destino:LatLng,googleMap: GoogleMap)
     {
