@@ -3,8 +3,13 @@ package com.simplife.skip.util
 //TODO: COMENTAR LOS URL'S QUE NO USEN Y DESCOMENTAR EL QUE USEN :V
 
 
+<<<<<<< HEAD
 const val URL_API = "http://192.168.1.62:8080/" //Bryan
 //const val URL_API = "http://192.168.1.2:6060/" //Pepino
+=======
+//const val URL_API = "http://192.168.1.62:8080/" //Bryan
+const val URL_API = "http://192.168.1.2:6060/" //Pepino
+>>>>>>> c44484ccd14a8d19e8f5d01c59e858c9181e7516
 //const val URL_API = "http://192.168.0.8:8080/" //César
 //const val URL_API = "https://goesupc.mybluemix.net/"
 

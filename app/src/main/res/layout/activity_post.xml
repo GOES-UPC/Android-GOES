@@ -225,7 +225,7 @@
                                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                                     android:layout_width="135dp"
                                     android:layout_height="wrap_content"
-                                    android:hint="Seleccione un punto Destino"
+                                    android:hint="Seleccione un punto en el mapa"
                                     android:padding="2dp"
                                     android:textSize="12.5dp"
                                     android:textColor="#454F63"
@@ -255,12 +255,36 @@
 
                         </LinearLayout>
 
-                        <ImageButton
-                            android:id="@+id/img_btn_ida"
-                            android:layout_width="50dp"
-                            android:layout_height="fill_parent"
-                            android:layout_marginRight="0dp"
-                            android:background="@drawable/ida"></ImageButton>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp">
+
+                            <ImageButton
+                                android:id="@+id/img_btn_ida"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="0dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/ida"></ImageButton>
+
+                            <TextView
+                                android:id="@+id/sense_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/raleway_bold"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:text="  Ida  "
+                                android:textAlignment="center"
+                                android:foregroundGravity="center"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
 
 
