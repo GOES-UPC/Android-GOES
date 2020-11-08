@@ -3,6 +3,7 @@ package com.simplife.skip.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -43,6 +44,9 @@ class SolicitudesPasajeroRecyclerAdapter : RecyclerView.Adapter<RecyclerView.Vie
         val solisMessage = itemView.solis_message
         val solisAuthor = itemView.solis_author
         val solisTime = itemView.solis_tiempo
+        val solisCond = itemView.solisPas
+
+        val scale2 = AnimationUtils.loadAnimation(itemView.context,R.anim.fade_scale_animation)
 
         fun bind(solicitud: Solicitud){
 
@@ -53,6 +57,8 @@ class SolicitudesPasajeroRecyclerAdapter : RecyclerView.Adapter<RecyclerView.Vie
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
+
+            solisCond.animation = scale2
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)

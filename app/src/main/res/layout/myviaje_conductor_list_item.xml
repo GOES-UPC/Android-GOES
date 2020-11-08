@@ -13,6 +13,7 @@
     app:cardPreventCornerOverlap="false"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="10dp"
+    android:id="@+id/cardViajeCond"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout

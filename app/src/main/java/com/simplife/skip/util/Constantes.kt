@@ -4,9 +4,9 @@ package com.simplife.skip.util
 
 
 //const val URL_API = "http://192.168.1.62:8080/" //Bryan
-//const val URL_API = "http://192.168.1.2:6060/" //Pepino
+const val URL_API = "http://192.168.1.2:6060/" //Pepino
 
-const val URL_API = "http://192.168.0.8:8080/" //César
+//const val URL_API = "http://192.168.0.8:8080/" //César
 //const val URL_API = "https://goesupc.mybluemix.net/"
 
 const val API_KEY = "AIzaSyBBqph0jQU_8qqrqypG35bQazc29sUanjo"

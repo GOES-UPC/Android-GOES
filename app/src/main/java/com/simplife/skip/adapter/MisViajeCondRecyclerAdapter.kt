@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
@@ -61,6 +62,9 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         val miviajeDestiny = itemView.miviajecond_destino
         val miviajeHoraOrigen = itemView.miviajecond_horaorigen
         val miviajeHoraDestino = itemView.miviajecond_horadestino
+        val cardViaje = itemView.cardViajeCond
+
+        val scale2 = AnimationUtils.loadAnimation(itemView.context,R.anim.fade_scale_animation)
 
         fun bind(viaje: ViajeInicio){
             miviajeSource.setText(viaje.paradas.get(0).ubicacion)
@@ -76,6 +80,7 @@ class MisViajeCondRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
                     Toast.makeText(itemView.context, "El viaje ha finalizado", Toast.LENGTH_SHORT).show()
                 }
             }
+            cardViaje.animation = scale2
         }
     }
 

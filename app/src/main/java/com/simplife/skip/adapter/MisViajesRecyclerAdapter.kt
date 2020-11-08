@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -67,6 +68,9 @@ class MisViajesRecyclerAdapter(val launchActivity: Activity) : RecyclerView.Adap
         val miviajeHoraDestino = itemView.miviaje_horadestino
         val reportbutton = itemView.miviaje_commentBtn
         val sharebutton = itemView.miviaje_shareBtn
+        val cardViaje = itemView.cardViajePas
+
+        val scale2 = AnimationUtils.loadAnimation(itemView.context,R.anim.fade_scale_animation)
 
         fun bind(viaje: ViajeInicio){
             miviajeTitle.setText(viaje.fechaPublicacion)
@@ -84,6 +88,8 @@ class MisViajesRecyclerAdapter(val launchActivity: Activity) : RecyclerView.Adap
                 .applyDefaultRequestOptions(requestOptions)
                 .load(viaje.imagen)
                 .into(miuserImage)
+
+            cardViaje.animation = scale2
 
             reportbutton.setOnClickListener{
                 dialogCalificar(itemView, viaje)

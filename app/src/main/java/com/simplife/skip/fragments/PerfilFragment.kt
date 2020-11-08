@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -91,9 +92,12 @@ class PerfilFragment : Fragment() {
         usuarioid = prefs.getLong("idusuario",0)
         rol = prefs.getString("rol","pasajero")!!
 
+        val scale2 = AnimationUtils.loadAnimation(context,R.anim.fade_scale_animation)
+
         perfil_settings.setOnClickListener{
             if(opciones.visibility == View.GONE) {
                 opciones.visibility = View.VISIBLE
+                opciones.animation = scale2
             }
             else
                 opciones.visibility = View.GONE

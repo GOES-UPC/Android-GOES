@@ -8,6 +8,7 @@ import android.view.InflateException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -94,6 +95,7 @@ class ViajeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val viajeDestiny = itemView.viaje_destino
         val viajeHoraOrigen = itemView.viaje_hora_origen
         val viajeHoraDestino = itemView.viaje_hora_destino
+        val cardViaje = itemView.cardViaje
 
         fun bind(viaje: ViajeInicio){
             viajeTitle.setText(viaje.fechaPublicacion)
@@ -112,6 +114,10 @@ class ViajeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .applyDefaultRequestOptions(requestOptions)
                 .load(viaje.imagen)
                 .into(userImage)
+
+
+            val scale2 = AnimationUtils.loadAnimation(itemView.context,R.anim.fade_scale_animation)
+            cardViaje.animation = scale2
 
             itemView.setOnClickListener{
                 //mostrarDialogViaje(viaje.paradas[0], viaje.paradas[1]);

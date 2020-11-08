@@ -3,12 +3,18 @@ package com.simplife.skip.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.simplife.skip.R
 import com.simplife.skip.models.Solicitud
+import kotlinx.android.synthetic.main.solicitud_conductor_list_item.view.*
 import kotlinx.android.synthetic.main.solicitud_list_item.view.*
+import kotlinx.android.synthetic.main.solicitud_list_item.view.solis_author
+import kotlinx.android.synthetic.main.solicitud_list_item.view.solis_image
+import kotlinx.android.synthetic.main.solicitud_list_item.view.solis_message
+import kotlinx.android.synthetic.main.solicitud_list_item.view.solis_tiempo
 
 class SolicitudesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -43,6 +49,9 @@ class SolicitudesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         val solisMessage = itemView.solis_message
         val solisAuthor = itemView.solis_author
         val solisTime = itemView.solis_tiempo
+        val solisCond = itemView.solisCond
+
+        val scale2 = AnimationUtils.loadAnimation(itemView.context,R.anim.fade_scale_animation)
 
         fun bind(solicitud: Solicitud){
 
@@ -53,6 +62,8 @@ class SolicitudesRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
+
+            solisCond.animation = scale2
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
