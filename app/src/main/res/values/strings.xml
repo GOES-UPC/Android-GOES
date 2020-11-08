@@ -17,4 +17,5 @@
     <string name="iniciar_viaje_validacion">¿Está seguro de que quiere iniciar el viaje?</string>
     <string name="finalizar_viaje_validacion">¿Está seguro de que quiere finalizar el viaje?</string>
     <string name="finalizar_viaje_detalle">Está afirmando que todos los pasajeros han llegado a su destino</string>
+    <string name="share_text">Compartir viaje</string>
 </resources>

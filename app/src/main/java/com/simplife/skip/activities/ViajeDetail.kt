@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -44,6 +45,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ViajeDetail : AppCompatActivity() {
 
     private lateinit var back_btn: ImageButton
+    //Compartir
+    private lateinit var share_btn: Button
 
     private  lateinit var viajeAdapter: ResenasRecyclerAdapter
     private lateinit var recyclerView: RecyclerView
@@ -84,7 +87,15 @@ class ViajeDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_viaje_detail)
 
-        viajeid = intent.getSerializableExtra("via") as Long
+        val uri = intent.data
+        if(uri != null){
+            //www.goesapp.com/viajes?id=...
+            val id = uri.getQueryParameter("id")!!.toLong()
+            viajeid = id;
+        } else {
+            viajeid = intent.getSerializableExtra("via") as Long
+        }
+
         back_btn = findViewById(R.id.detback_button)
 
         prefs = getSharedPreferences("user", Context.MODE_PRIVATE)
@@ -92,7 +103,10 @@ class ViajeDetail : AppCompatActivity() {
 
         btn_solicitar = findViewById(R.id.btn_solicitar)
         iv_staticMap = findViewById(R.id.iv_staticmap)
-
+        share_btn = findViewById(R.id.boton_compartir)
+        share_btn.setOnClickListener{
+            compartirViaje(viajeid)
+        }
 
         requestOptions = RequestOptions()
             .placeholder(android.R.color.white)
@@ -357,6 +371,18 @@ class ViajeDetail : AppCompatActivity() {
             locationCallback,
             Looper.getMainLooper()
         )
+    }
+
+    fun compartirViaje(viajeId: Long){
+        val nombreUsuario = prefs.getString("nombres", "Bryan")
+        val url = "https://www.goesapp.com/viajes?id=${viajeId}"
+        val type = "text/plain"
+        ShareCompat.IntentBuilder
+            .from(this)
+            .setType(type)
+            .setChooserTitle(R.string.share_text)
+            .setText("$nombreUsuario cree que este viaje podría serte útil: ${url}")
+            .startChooser()
     }
 
 

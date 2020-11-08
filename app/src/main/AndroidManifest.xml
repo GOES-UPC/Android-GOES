@@ -37,7 +37,14 @@
         <activity android:name=".activities.StartViajeActivity" />
         <activity android:name=".activities.Post" />
         <activity android:name=".activities.Login" />
-        <activity android:name=".activities.ViajeDetail" />
+        <activity android:name=".activities.ViajeDetail" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="www.goesapp.com"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Splash_screen"
             android:theme="@style/SplashTheme">
