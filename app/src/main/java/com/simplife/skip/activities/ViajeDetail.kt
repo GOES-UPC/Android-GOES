@@ -1,18 +1,23 @@
 package com.simplife.skip.activities
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Looper
+import android.util.AttributeSet
 import android.util.Log
 import android.view.InflateException
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -80,6 +85,8 @@ class ViajeDetail : AppCompatActivity() {
 
     private var viewDialog : View? = null
 
+    private lateinit var viewlayout:ConstraintLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_viaje_detail)
@@ -92,6 +99,7 @@ class ViajeDetail : AppCompatActivity() {
 
         btn_solicitar = findViewById(R.id.btn_solicitar)
         iv_staticMap = findViewById(R.id.iv_staticmap)
+
 
 
         requestOptions = RequestOptions()
@@ -162,7 +170,8 @@ class ViajeDetail : AppCompatActivity() {
             dialogSolicitar()
         }
 
-
+        viewlayout = findViewById( R.id.mainmenu) as ConstraintLayout
+        viewlayout.foreground.alpha =  0;
 
     }
 
@@ -259,15 +268,16 @@ class ViajeDetail : AppCompatActivity() {
         dibujarRuta(latOrigen,latDestino,googleMap)
         val builder = LatLngBounds.Builder()
         builder.include(latOrigen).include(latDestino)
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),0))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),0))
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(googleMap.cameraPosition.zoom -1))
     }
 
     fun dialogSolicitar()
     {
 
-
+        viewlayout.foreground.alpha = 220
         //https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&key=YOUR_API_KEY
-        val builer = AlertDialog.Builder(this)
+        val builer = AlertDialog.Builder(this, R.style.DialogTheme)
         if (viewDialog != null)
         {
             val parent = viewDialog!!.parent as ViewGroup
@@ -282,17 +292,18 @@ class ViajeDetail : AppCompatActivity() {
 
         }
 
-
         builer.setView(viewDialog)
         dialog =  builer.create()
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
 
-
-
+        Log.i("AH",dialog.window.toString());
+        dialog.setOnDismissListener {
+            viewlayout.foreground.alpha = 0
+        }
         val fragmentMap = supportFragmentManager.findFragmentById(R.id.fr_dialog_map) as SupportMapFragment
         val solicitarButton = viewDialog!!.findViewById(R.id.btn_dialog_solicitar) as Button
-        et_dialog_solicitar_message = viewDialog!!.findViewById(R.id.et_solicitar_mensaje)
+        et_dialog_solicitar_message = viewDialog!!.findViewById(R.id.et_dialog_solicitar_message)
         fragmentMap.getMapAsync(mapCallback)
 
         solicitarButton.setOnClickListener {
