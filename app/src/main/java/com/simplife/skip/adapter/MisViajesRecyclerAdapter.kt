@@ -182,7 +182,7 @@ class MisViajesRecyclerAdapter(val launchActivity: Activity) : RecyclerView.Adap
                 .from(launchActivity)
                 .setType(type)
                 .setSubject("Goes - Viaje compartido")
-                .setHtmlText("<b>$nombreUsuario cree que este viaje podría serte útil:</b> ${url}")
+                .setText("$nombreUsuario cree que este viaje podría serte útil: ${url}")
                 .setChooserTitle(R.string.share_text)
                 .startChooser()
         }
